@@ -9,13 +9,13 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Homework19
 build_property.RootNamespace = Homework19
-build_property.ProjectDir = d:\Work\Homework\Homework19\Homework19\
+build_property.ProjectDir = D:\Work\Homework\Homework19\Homework19\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = d:\Work\Homework\Homework19\Homework19
+build_property.MSBuildProjectDirectory = D:\Work\Homework\Homework19\Homework19
 build_property._RazorSourceGeneratorDebug = 
 
-[d:/Work/Homework/Homework19/Homework19/Index.cshtml]
+[D:/Work/Homework/Homework19/Homework19/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = SW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
