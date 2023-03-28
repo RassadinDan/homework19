@@ -8,7 +8,7 @@ namespace Homework19
 		// GET: HomeController
 		public ActionResult Index()
 		{
-			return View();
+			return View(viewName: "IndexModel");
 		}
 
 		// GET: HomeController/Details/5
