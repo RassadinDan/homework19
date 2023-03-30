@@ -16,7 +16,6 @@ namespace Homework19
 
 		public Task Invoke(HttpContext httpContext)
 		{
-
 			return _next(httpContext);
 		}
 	}

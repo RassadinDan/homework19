@@ -1,20 +1,12 @@
 using Homework19;
+using Homework19.Controllers;
 using Microsoft.AspNetCore;
 
 class Program
 {
 	static void Main(string[] args)
 	{
-		var builder = WebApplication.CreateBuilder(args);
-		builder.Services.AddRazorPages();
-		builder.Services.AddControllers();
-		var app = builder.Build();
-
-		//
-		app.MapControllerRoute(name: "default", 
-							pattern: "{controller = Home}/{action = Index}");
-
-		app.Run();
+		CreateWebHostBuilder(args).Build().Run();
 	}
 
 	public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
