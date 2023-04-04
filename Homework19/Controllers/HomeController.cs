@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Homework19.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Homework19.Controllers
@@ -15,7 +16,12 @@ namespace Homework19.Controllers
         // GET: HomeController
         public ActionResult Index()
         {
-			return View("Views/Home/Index.cshtml");
+            var contacts = new List<Contact>();
+            contacts.Add(new Contact(1, "surname", "name", "midname", 145213, "home", "some description"));
+
+            var book = new ContactBook(contacts);
+
+			return View(book);
         }
 
         // GET: HomeController/Details/5

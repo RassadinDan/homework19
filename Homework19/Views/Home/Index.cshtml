@@ -1,8 +1,10 @@
-﻿@page
+﻿@using Homework19.Models;
+@model ContactBook
 @{
-	this.ViewBag.Title = "Page";
+	//this.ViewBag.Title = "Контакты";
+	ViewData["Title"] = "Контакты";
 }
-@model Homework19.Views.Home.IndexModel
+
 
 <head>
 	
@@ -10,12 +12,37 @@
 
 <body>
 	<h1>
-		@ViewBag.Title
+		@ViewData["Title"]
 	</h1>
 	<h2>
 		Некие контакты
 	</h2>
-	<table>
-		
+	<table border="1">
+		<tr>
+			<th>
+				ID
+			</th>
+			<th>
+				Фамилия
+			</th>
+			<th>
+				Имя
+			</th>
+			<th>
+				Отчество
+			</th>
+		</tr>
+
+		<tr>
+			<td>
+				@Model.Contacts[0].Surname
+			</td>
+			<td>
+				@Model.Contacts[0].Name
+			</td>
+			<td>
+				@Model.Contacts[0].Midname
+			</td>
+		</tr>
 	</table>
 </body>

@@ -1,6 +1,6 @@
-﻿namespace Homework19
+﻿namespace Homework19.Models
 {
-    public class Account
+    public class Contact
     {
         public int Id;
 
@@ -16,7 +16,7 @@
 
         public string Description;
 
-        public Account(int id, string surname, string name, string midname, int phone, string address, string description)
+        public Contact(int id, string surname, string name, string midname, int phone, string address, string description)
         {
             Id = id;
             Surname = surname;
