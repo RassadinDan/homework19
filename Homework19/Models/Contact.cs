@@ -1,20 +1,23 @@
-﻿namespace Homework19.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Homework19.Models
 {
+    [Table("Contacts")]
     public class Contact
     {
-        public int Id;
+        public int Id { get; set; }
 
-        public string Surname;
+        public string Surname { get; set; }
 
-        public string Name;
+        public string Name { get; set; }
 
-        public string Midname;
+        public string Midname { get; set; }
 
-        public int Phone;
+        public int Phone { get; set; }
 
-        public string Address;
+        public string Address { get; set; }
 
-        public string Description;
+        public string Description { get; set; }
 
         public Contact(int id, string surname, string name, string midname, int phone, string address, string description)
         {

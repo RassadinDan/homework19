@@ -1,11 +1,11 @@
 ﻿@using Homework19.Models;
 @model ContactBook
 @{
-	//this.ViewBag.Title = "Контакты";
 	ViewData["Title"] = "Контакты";
 }
 
-
+<!DOCTYPE html>
+<html>
 <head>
 	
 </head>
@@ -33,16 +33,23 @@
 			</th>
 		</tr>
 
+		@foreach(var contact in Model.Contacts)
+		{
 		<tr>
 			<td>
-				@Model.Contacts[0].Surname
+				@contact.Id
 			</td>
 			<td>
-				@Model.Contacts[0].Name
+				@contact.Surname
 			</td>
 			<td>
-				@Model.Contacts[0].Midname
+				@contact.Name
+			</td>
+			<td>
+				@contact.Midname
 			</td>
 		</tr>
+		}
 	</table>
 </body>
+</html>

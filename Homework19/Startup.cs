@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Homework19
 {
@@ -8,6 +10,7 @@ namespace Homework19
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc(options => options.EnableEndpointRouting = false);
+			services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(@"DataSource = (localdb)\MSSQLLocalDB;InitialCatalog = ContactData;"));
 		}
 		public void Configure(IApplicationBuilder app)
 		{

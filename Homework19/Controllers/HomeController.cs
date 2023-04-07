@@ -7,6 +7,12 @@ namespace Homework19.Controllers
     [Controller]
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         // GET: HomeController/Hello
         public string Hello()
         {
@@ -16,11 +22,8 @@ namespace Homework19.Controllers
         // GET: HomeController
         public ActionResult Index()
         {
-            var contacts = new List<Contact>();
-            contacts.Add(new Contact(1, "surname", "name", "midname", 145213, "home", "some description"));
-
-            var book = new ContactBook(contacts);
-
+            var book = new ContactBook(_context);
+            book.Fill();
 			return View(book);
         }
 
