@@ -26,8 +26,12 @@ namespace Homework19
 				{
 					r.MapRoute(
 						name: "default",
-						template: "{controller=Home}/{action=Index}");
+						template: "{controller=Home}/{action=Index}/{id?}");
 				});
+
+			app.UseEndpoints(endpoints => { endpoints.MapControllerRoute(
+				name: "default",
+				pattern: "{controller=Home}/{action=Index}/{id?}"); });
 		}
 	}
 }

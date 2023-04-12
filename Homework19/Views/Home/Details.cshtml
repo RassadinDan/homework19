@@ -1,6 +1,7 @@
 ﻿@using Homework19.Models;
 @model Contact
 @{
+	ViewData["Title"] = "Подробная информация";
 }
 <!DOCTYPE html>
 <html>
@@ -9,11 +10,26 @@
 	</head>
 
 	<body>
-		<p>Фамилия: @Model.Surname</p>
-		<p>Имя: @Model.Name</p>
-		<p>Отчество: @Model.Midname</p>
-		<p>Телефон: @Model.Phone</p>
-		<p>Адрес: @Model.Address</p>
-		<p>Описание: @Model.Description</p>
+		<h1>
+			@ViewData["Title"]
+		</h1>
+		<p>
+			Фамилия: @Model.Surname
+		</p>
+		<p>
+			Имя: @Model.Name
+		</p>
+		<p>
+			Отчество: @Model.Midname
+		</p>
+		<p>
+			Телефон: @Model.Phone
+		</p>
+		<p>
+			Адрес: @Model.Address
+		</p>
+		<p>
+			Описание: @Model.Description
+		</p>
 	</body>
 </html>

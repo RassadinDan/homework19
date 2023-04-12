@@ -9,28 +9,36 @@ namespace Homework19.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public HomeController(ApplicationDbContext context)
+        public ContactBook book;
+
+		public HomeController(ApplicationDbContext context)
         {
             _context = context;
-        }
-        // GET: HomeController/Hello
-        public string Hello()
-        {
-            return "Hello";
+            book = new ContactBook(_context);
+            book.Fill();
         }
 
         // GET: HomeController
         public ActionResult Index()
         {
-            var book = new ContactBook(_context);
-            book.Fill();
+            //Вывод краткой информации обо всех контактах.
 			return View(book);
         }
 
-        // GET: HomeController/Details/5
-        public ActionResult Details(int id)
+		// GET: HomeController/Details/5
+		/// <summary>
+		/// Вывод подробной информации о конкретном контакте
+		/// </summary>
+		/// <param name="id">Индекс контакта в коллекции контактов ContactBook</param>
+		/// <returns></returns>
+		public ActionResult Details(int id)
         {
-            return View();
+            if(id <= -1 && id > book.Contacts.Count)
+            {
+                return NotFound();
+            }
+
+            return View(book.Contacts[id]);
         }
 
         // GET: HomeController/Create
