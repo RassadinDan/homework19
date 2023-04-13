@@ -10,6 +10,8 @@ namespace Homework19
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc(options => options.EnableEndpointRouting = false);
+
+			// Контекст понадобится для извлечения контактов из базы данных.
 			services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(@"DataSource = (localdb)\MSSQLLocalDB;InitialCatalog = ContactData;"));
 		}
 		public void Configure(IApplicationBuilder app)

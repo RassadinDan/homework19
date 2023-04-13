@@ -16,6 +16,9 @@ namespace Homework19.Models
 			_context = context;
 		}
 
+		/// <summary>
+		/// Заполнение коллекции контактами из базы данных.
+		/// </summary>
 		public void Fill()
 		{
 			using (var context = new ApplicationDbContext())
