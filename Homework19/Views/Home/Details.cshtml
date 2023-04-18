@@ -6,29 +6,29 @@
 <!DOCTYPE html>
 <html>
 	<head>
-
+		<link rel="stylesheet" href="~/css/style.css" />
 	</head>
 
 	<body>
-		<h1>
+		<h1 class="title">
 			@ViewData["Title"]
 		</h1>
-		<p>
+		<p class="contacts">
 			Фамилия: @Model.Surname
 		</p>
-		<p>
+		<p class="contacts">
 			Имя: @Model.Name
 		</p>
-		<p>
+		<p class="contacts">
 			Отчество: @Model.Midname
 		</p>
-		<p>
+		<p class="contacts">
 			Телефон: @Model.Phone
 		</p>
-		<p>
+		<p class="contacts">
 			Адрес: @Model.Address
 		</p>
-		<p>
+		<p class="contacts">
 			Описание: @Model.Description
 		</p>
 	</body>
