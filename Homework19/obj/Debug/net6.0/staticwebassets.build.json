@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "JNqgqtpnq6Pr1NBm2MnE3ZP6qBwIbAyWZsQGRZimstc=",
+  "Hash": "PFtXGkPDRVQDoBVMcpuU14p7UAF1PJmeyypoZ6hMJno=",
   "Source": "Homework19",
   "BasePath": "_content/Homework19",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "Homework19\\wwwroot",
+      "Source": "Homework19",
+      "ContentRoot": "D:\\Work\\Homework\\Homework19\\Homework19\\wwwroot\\",
+      "BasePath": "_content/Homework19",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Work\\Homework\\Homework19\\Homework19\\wwwroot\\css\\style.css",
+      "SourceId": "Homework19",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Work\\Homework\\Homework19\\Homework19\\wwwroot\\",
+      "BasePath": "_content/Homework19",
+      "RelativePath": "css/style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\style.css"
+    }
+  ]
 }

@@ -1,0 +1,17 @@
+h1.title{
+    font-size : 32px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table.contacts{
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-color: black;
+    border-width: 2px;
+    border-style: inherit;
+}
+
+h2.contacts{
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+}
