@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PFtXGkPDRVQDoBVMcpuU14p7UAF1PJmeyypoZ6hMJno=",
+  "Hash": "S3lMlZaDre3mWDkAVGxbO4hD1FX+LFE/gAv8oaBKhYo=",
   "Source": "Homework19",
   "BasePath": "_content/Homework19",
   "Mode": "Default",
@@ -32,6 +32,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\style.css"
+    },
+    {
+      "Identity": "D:\\Work\\Homework\\Homework19\\Homework19\\wwwroot\\images\\1-22.jpg",
+      "SourceId": "Homework19",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Work\\Homework\\Homework19\\Homework19\\wwwroot\\",
+      "BasePath": "_content/Homework19",
+      "RelativePath": "images/1-22.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\1-22.jpg"
     }
   ]
 }

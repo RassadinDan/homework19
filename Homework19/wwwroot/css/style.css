@@ -1,11 +1,25 @@
+html{
+    background-image: linear-gradient(white, blue);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 h1.title{
     font-size : 32px;
-    font-family: Arial, Helvetica, sans-serif;
+    
 }
 
 table.contacts{
     font-size: 18px;
-    font-family: Arial, Helvetica, sans-serif;
     border-color: black;
     border-width: 2px;
     border-style: inherit;
@@ -13,10 +27,12 @@ table.contacts{
 
 h2.contacts{
     font-size: 24px;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 p.contacts{
     font-size: 18px;
-    font-family: Arial, Helvetica, sans-serif;
+}
+
+td{
+   padding: 20px; 
 }

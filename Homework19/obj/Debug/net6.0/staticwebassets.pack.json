@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
+      "Id": "D:\\Work\\Homework\\Homework19\\Homework19\\wwwroot\\images\\1-22.jpg",
+      "PackagePath": "staticwebassets\\images\\1-22.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Homework19.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
