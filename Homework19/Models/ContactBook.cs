@@ -9,11 +9,14 @@ namespace Homework19.Models
 	{
 		public List<Contact> Contacts;
 
+		public ContactFactory factory;
+
 		private readonly ApplicationDbContext _context;
 		public ContactBook(ApplicationDbContext context)
 		{
 			Contacts = new List<Contact>();
 			_context = context;
+			factory= new ContactFactory(_context);
 		}
 
 		/// <summary>
@@ -26,7 +29,6 @@ namespace Homework19.Models
 				var contacts = context.Contacts.ToList();
 				Contacts = contacts;
 			}
-				//Contacts = _context.Contacts.Local.ToBindingList();
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Homework19.Controllers
         }
 
         // GET: HomeController
-        public ActionResult Index()
+        public IActionResult Index()
         {
             //Вывод краткой информации обо всех контактах.
 			return View(book);
@@ -31,7 +31,7 @@ namespace Homework19.Controllers
 		/// </summary>
 		/// <param name="id">Индекс контакта в коллекции контактов ContactBook</param>
 		/// <returns></returns>
-		public ActionResult Details(int id)
+		public IActionResult Details(int id)
         {
             if(id <= -1 && id > book.Contacts.Count)
             {
@@ -42,24 +42,29 @@ namespace Homework19.Controllers
         }
 
         // GET: HomeController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
+            ViewData["Title"] = "Новый контакт";
             return View();
         }
 
-        // POST: HomeController/Create
+        // POST: HomeController/CreateNew
+        // не проходит этот метод, Create работает, а на этот уже не переходит, видимо не обработано нажатие на submit
+        // проходит переадрессация к этому методу но сам метод не дорабатывает 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult CreateNew(string surname, string name, string midname,
+            int phone, string address, string description)
         {
-            try
+            using (var db = new ApplicationDbContext())
             {
-                return RedirectToAction(nameof(Index));
+                var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
+                db.Contacts.Add(contact);
+                db.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+
+            return Redirect("Index");
         }
 
         // GET: HomeController/Edit/5

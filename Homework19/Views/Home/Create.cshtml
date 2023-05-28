@@ -1,0 +1,52 @@
+﻿@using Homework19.Controllers
+@{
+	// контроллер наотрез отказывается переводить меня на нужную мне страницу
+}
+
+<!Doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href="~/css/style.css" />
+	</head>
+	<body>
+		<h1 class="title">
+			@ViewData["Title"]
+		</h1>
+
+		<form action="~/Home/CreateNew" method="post">
+
+			<label for="surname">
+				Фамилия
+			</label><br />
+			<input type="text" name="surname" value=""/><br />
+
+			<label for="name">
+				Имя
+			</label><br />
+			<input type="text" name="c_name" value=""/><br />
+
+			<label for="midname">
+				Отчество
+			</label><br />
+			<input type="text" name="midname" value=""/><br />
+
+			<label for="phone">
+				Телефон
+			</label><br />
+			<input type="tel" name="phone" value=""/><br />
+
+			<label for="address">
+				Адрес
+			</label><br />
+			<input type="text" name="address" value=""/><br />
+
+			<label for="description">
+				Описание
+			</label><br />
+			<input type="text" name="description" value=""/><br />
+
+			<p><input type="submit" value="Создать" /></p>
+		</form>
+
+	</body>
+</html>
