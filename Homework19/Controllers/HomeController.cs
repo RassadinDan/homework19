@@ -1,6 +1,9 @@
 ﻿using Homework19.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace Homework19.Controllers
 {
@@ -49,22 +52,29 @@ namespace Homework19.Controllers
         }
 
         // POST: HomeController/CreateNew
-        // не проходит этот метод, Create работает, а на этот уже не переходит, видимо не обработано нажатие на submit
-        // проходит переадрессация к этому методу но сам метод не дорабатывает 
+        // проходит переадрессация к этому методу но сам метод не отрабатывает 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateNew(string surname, string name, string midname,
-            int phone, string address, string description)
+        public IActionResult CreateNew(string surname, string name, string midname, string _phone, string address, string description)
         {
-            using (var db = new ApplicationDbContext())
+            if (ModelState.IsValid)
             {
-                var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
-                db.Contacts.Add(contact);
-                db.SaveChanges();
+                using (var db = new ApplicationDbContext())
+                {
+					int phone = Int32.Parse(_phone);
+					var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
+                    db.Contacts.Add(contact);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction(nameof(Index));
             }
 
-            return Redirect("Index");
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // GET: HomeController/Edit/5
