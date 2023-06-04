@@ -31,6 +31,8 @@ namespace Homework19
 						template: "{controller=Home}/{action=Index}/{id?}");
 				});
 
+
+//возможно, из-за этой настройки не работает нормально маршрутизаци, нужно проверить.
 			app.UseEndpoints(endpoints => { endpoints.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}"); });
