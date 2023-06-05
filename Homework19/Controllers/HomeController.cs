@@ -56,13 +56,12 @@ namespace Homework19.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateNew(string surname, string name, string midname, string _phone, string address, string description)
+        public IActionResult CreateNew(string surname, string name, string midname, int phone, string address, string description)
         {
             if (ModelState.IsValid)
             {
                 using (var db = new ApplicationDbContext())
                 {
-					int phone = Int32.Parse(_phone);
 					var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
                     db.Contacts.Add(contact);
                     db.SaveChanges();
