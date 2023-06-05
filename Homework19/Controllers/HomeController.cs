@@ -87,11 +87,11 @@ namespace Homework19.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
-            try
+            if(id < 0)
             {
-                return RedirectToAction(nameof(Index));
+                return Redirect(nameof(Index));
             }
-            catch
+            else
             {
                 return View();
             }
