@@ -60,12 +60,9 @@ namespace Homework19.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var db = new ApplicationDbContext())
-                {
-					var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
-                    db.Contacts.Add(contact);
-                    db.SaveChanges();
-                }
+				var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
+                _context.Contacts.Add(contact);
+                _context.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }
