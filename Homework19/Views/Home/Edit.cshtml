@@ -1,0 +1,46 @@
+﻿@using Homework19.Models
+@model Contact
+@{
+}
+<!Doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+	<form action="~/Home/Edit" method="post">
+
+		<label for="surname">
+			Фамилия
+		</label><br />
+		<input type="text" name="surname" value="@Model.Surname" /><br />
+
+		<label for="name">
+			Имя
+		</label><br />
+		<input type="text" name="name" value="@Model.Name" /><br />
+
+		<label for="midname">
+			Отчество
+		</label><br />
+		<input type="text" name="midname" value="@Model.Midname" /><br />
+
+		<label for="phone">
+			Телефон
+		</label><br />
+		<input type="tel" name="phone" value="@Model.Phone" /><br />
+
+		<label for="address">
+			Адрес
+		</label><br />
+		<input type="text" name="address" value="@Model.Address" /><br />
+
+		<label for="description">
+			Описание
+		</label><br />
+		<input type="text" name="description" value="@Model.Description" /><br />
+
+		<p><input type="submit" value="Созранить изменения" /></p>
+	</form>
+</body>
+</html>

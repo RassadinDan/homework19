@@ -76,22 +76,23 @@ namespace Homework19.Controllers
         // GET: HomeController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
-        }
+            if(id < 0)
+            {
+			    return View(book.Contacts[id]);
+            }
+            else { return BadRequest(); }
+		}
 
         // POST: HomeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditForm(int id, IFormCollection collection)
         {
-            if(id < 0)
+            if(id < 0 || ModelState.IsValid)
             {
                 return Redirect(nameof(Index));
             }
-            else
-            {
-                return View();
-            }
+            else { return BadRequest(); }
         }
 
         // GET: HomeController/Delete/5
