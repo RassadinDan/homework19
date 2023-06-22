@@ -7,11 +7,12 @@
 		{
 			_context = context;
 		}
-		public Contact CreateContact(string surname, string name, string midname, 
-			int phone, string address, string description)
+		public Contact CreateContact()
 		{
 			int id = _context.Contacts.Count();
-			return new Contact(id, surname, name, midname, phone, address, description);
+			var contact = new Contact(/*id, surname, name, midname, phone, address, description*/);
+			contact.Id = id;
+			return contact;
 		}
 	}
 }

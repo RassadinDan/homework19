@@ -60,17 +60,21 @@ namespace Homework19.Controllers
         {
             if (ModelState.IsValid)
             {
-				var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
+				var contact = book.factory.CreateContact(/*surname, name, midname, phone, address, description*/);
+
+                contact.Surname= surname;
+                contact.Name = name;
+                contact.Midname= midname;
+                contact.Phone= phone;
+                contact.Address= address;
+                contact.Description= description;
+
                 _context.Contacts.Add(contact);
                 _context.SaveChanges();
-
                 return RedirectToAction(nameof(Index));
             }
 
-            else
-            {
-                return BadRequest();
-            }
+            else{ return BadRequest(); }
         }
 
         // GET: HomeController/Edit/5
@@ -78,9 +82,9 @@ namespace Homework19.Controllers
         {
             if(id < 0)
             {
-			    return View(book.Contacts[id]);
+                return BadRequest();
             }
-            else { return BadRequest(); }
+            else { return View(book.Contacts[id]); }
 		}
 
         // POST: HomeController/Edit/5

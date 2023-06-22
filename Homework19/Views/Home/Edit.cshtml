@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="~/css/style.css" />
 </head>
 <body>
-	<form action="~/Home/Edit" method="post">
+	<form name="editForm" action="~/Home/EditForm" method="post">
 
 		<label for="surname">
 			Фамилия
@@ -40,7 +40,7 @@
 		</label><br />
 		<input type="text" name="description" value="@Model.Description" /><br />
 
-		<p><input type="submit" value="Созранить изменения" /></p>
+		<p><input type="submit" value="Сохранить изменения" /></p>
 	</form>
 </body>
 </html>
