@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="~/css/style.css" />
 </head>
 <body>
-	<form name="editForm" action="~/Home/EditForm" method="post">
+	<form name="editForm" action="~/Home/EditForm/@(Model.Id-1)" method="post">
 
 		<label for="surname">
 			Фамилия

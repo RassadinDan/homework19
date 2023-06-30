@@ -10,22 +10,22 @@ namespace Homework19.Models
         [Key]
         public int Id { get; set; }
 
-        [Required, FromForm(Name = "surname")]
+        [Required]
         public string Surname { get; set; }
 
-        [Required, FromForm(Name = "name")]
+        [Required]
         public string Name { get; set; }
 
-        [Required, FromForm(Name = "midname")]
+        [Required]
         public string Midname { get; set; }
 
-        [Required, FromForm(Name = "phone")]
+        [Required]
         public int Phone { get; set; }
 
-        [Required, FromForm(Name = "address")]
+        [Required]
         public string Address { get; set; }
 
-        [Required, FromForm(Name = "description")]
+        [Required]
         public string Description { get; set; }
 
         //public Contact(int id, string surname, string name, string midname, int phone, string address, string description)

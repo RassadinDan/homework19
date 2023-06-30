@@ -22,18 +22,20 @@ namespace Homework19.Controllers
         }
 
         // GET: HomeController
+        [HttpGet]
         public IActionResult Index()
         {
             //Вывод краткой информации обо всех контактах.
 			return View(book);
         }
 
-		// GET: HomeController/Details/5
-		/// <summary>
-		/// Вывод подробной информации о конкретном контакте
-		/// </summary>
-		/// <param name="id">Индекс контакта в коллекции контактов ContactBook</param>
-		/// <returns></returns>
+        // GET: HomeController/Details/5
+        /// <summary>
+        /// Вывод подробной информации о конкретном контакте
+        /// </summary>
+        /// <param name="id">Индекс контакта в коллекции контактов ContactBook</param>
+        /// <returns></returns>
+        [HttpGet]
 		public IActionResult Details(int id)
         {
             if(id <= -1 && id > book.Contacts.Count)
@@ -45,6 +47,7 @@ namespace Homework19.Controllers
         }
 
         // GET: HomeController/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["Title"] = "Новый контакт";
@@ -52,32 +55,26 @@ namespace Homework19.Controllers
         }
 
         // POST: HomeController/CreateNew
-        // проходит переадрессация к этому методу но сам метод не отрабатывает 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateNew(string surname, string name, string midname, int phone, string address, string description)
+        public IActionResult CreateNew([FromForm(Name = "surname")] string surname, [FromForm(Name = "name")] string name,
+            [FromForm(Name = "midname")] string midname, [FromForm(Name ="phone)")] int phone, [FromForm(Name = "address")] string address,
+            [FromForm(Name = "description")] string description)
         {
             if (ModelState.IsValid)
             {
-				var contact = book.factory.CreateContact(/*surname, name, midname, phone, address, description*/);
+				var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
 
-                contact.Surname= surname;
-                contact.Name = name;
-                contact.Midname= midname;
-                contact.Phone= phone;
-                contact.Address= address;
-                contact.Description= description;
-
-                _context.Contacts.Add(contact);
+                //_context.Contacts.Add(contact);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
 
             else{ return BadRequest(); }
         }
 
         // GET: HomeController/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             if(id < 0)
@@ -90,13 +87,25 @@ namespace Homework19.Controllers
         // POST: HomeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditForm(int id, IFormCollection collection)
+        public ActionResult EditForm(int id, IFormCollection collection,
+            string surname, string name, string midname, int phone, string address, string description)
         {
-            if(id < 0 || ModelState.IsValid)
+            if(id < 0 || !ModelState.IsValid)
             {
+				return BadRequest(); ;
+            }
+            else 
+            {
+                var contact = book.Contacts[id];
+                contact.Surname= surname;
+                contact.Name= name;
+                contact.Midname= midname;
+                contact.Phone= phone;
+                contact.Address = address;
+                contact.Description= description;
+                _context.SaveChanges();
                 return Redirect(nameof(Index));
             }
-            else { return BadRequest(); }
         }
 
         // GET: HomeController/Delete/5
