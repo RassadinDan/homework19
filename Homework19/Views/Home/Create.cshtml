@@ -13,37 +13,43 @@
 			@ViewData["Title"]
 		</h1>
 
-		<form name="createForm" action="~/Home/CreateNew" method="post">
+		<form name="createForm" action="~/Home/Create" method="post">
 
 			<label for="surname">
 				Фамилия
 			</label><br />
-			<input type="text" name="surname" value=""/><br />
+			<input type="text" asp-for="surname" value=""/><br />
+			<span asp-validation-for="surname"/>
 
 			<label for="name">
 				Имя
 			</label><br />
-			<input type="text" name="name" value=""/><br />
+			<input type="text" asp-for="name" value=""/><br />
+			<span asp-validation-for="name"/>
 
 			<label for="midname">
 				Отчество
 			</label><br />
-			<input type="text" name="midname" value=""/><br />
+			<input type="text" asp-for="midname" value=""/><br />
+			<span asp-validation-for="midname"/>
 
 			<label for="phone">
 				Телефон
 			</label><br />
-			<input type="tel" name="phone" value=""/><br />
+			<input type="tel" asp-for="phone" value=""/><br />
+			<span asp-validation-for="phone"/>
 
 			<label for="address">
 				Адрес
 			</label><br />
-			<input type="text" name="address" value=""/><br />
+			<input type="text" asp-for="address" value=""/><br />
+			<span asp-validation-for="address"/>
 
 			<label for="description">
 				Описание
 			</label><br />
-			<input type="text" name="description" value=""/><br />
+			<input type="text" asp-for="description" value=""/><br />
+			<span asp-validation-for="description"/>
 
 			<p><input type="submit" value="Создать" /></p>
 		</form>

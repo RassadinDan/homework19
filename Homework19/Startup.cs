@@ -18,16 +18,17 @@ namespace Homework19
 		{
 			// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 
-			app.UseStaticFiles();
-			//app.UseMiddleware<MyMiddleware>();
-			app.UseRouting();
+			app.UseExceptionHandler(options => { options.UseHandlerMiddleware(); });
 			app.UseHttpsRedirection();
-			//app.UseAuthorization();
+			app.UseStaticFiles();
+			app.UseRouting();
+			app.UseAuthorization();
 
 
 			app.UseEndpoints(endpoints => { endpoints.MapControllerRoute(
 				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}"); });
+				pattern: "{controller=Home}/{action=Index}/{id?}"); 
+			});
 
 			app.UseMvc(
 				r =>

@@ -57,7 +57,7 @@ namespace Homework19.Controllers
         // POST: HomeController/CreateNew
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateNew([FromForm(Name = "surname")] string surname, [FromForm(Name = "name")] string name,
+        public IActionResult Create([FromForm(Name = "surname")] string surname, [FromForm(Name = "name")] string name,
             [FromForm(Name = "midname")] string midname, [FromForm(Name ="phone)")] int phone, [FromForm(Name = "address")] string address,
             [FromForm(Name = "description")] string description)
         {
@@ -65,7 +65,7 @@ namespace Homework19.Controllers
             {
 				var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
 
-                //_context.Contacts.Add(contact);
+                _context.Contacts.Add(contact);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
