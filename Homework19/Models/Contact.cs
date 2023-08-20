@@ -19,7 +19,7 @@ namespace Homework19.Models
         [Required]
         public string Midname { get; set; }
 
-        [Required]
+        [Required, MaxLength(6)]
         public int Phone { get; set; }
 
         [Required]
@@ -28,15 +28,16 @@ namespace Homework19.Models
         [Required]
         public string Description { get; set; }
 
-        //public Contact(int id, string surname, string name, string midname, int phone, string address, string description)
-        //{
-        //    Id = id;
-        //    Surname = surname;
-        //    Name = name;
-        //    Midname = midname;
-        //    Phone = phone;
-        //    Address = address;
-        //    Description = description;
-        //}
+        public Contact(int id, string surname, string name, string midname, int phone, string address, string description)
+        {
+            Id = id;
+            Surname = surname;
+            Name = name;
+            Midname = midname;
+            Phone = phone;
+            Address = address;
+            Description = description;
+        }
+
     }
 }

@@ -81,3 +81,7 @@ D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\runtimes\win\lib\netstan
 D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 D:\Work\Homework\Homework19\Homework19\obj\Debug\net6.0\Homework19.csproj.CopyComplete
 D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\Homework19.staticwebassets.runtime.json
+D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\FluentValidation.dll
+D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\Work\Homework\Homework19\Homework19\obj\Debug\net6.0\Homework19.MvcApplicationPartsAssemblyInfo.cs

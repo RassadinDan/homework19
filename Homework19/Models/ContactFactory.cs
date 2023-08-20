@@ -13,14 +13,8 @@ namespace Homework19.Models
 		public Contact CreateContact(string surname, string name, string midname, int phone, string address, string description)
 		{
 			int id = _context.Contacts.Count();
-			var contact = new Contact();
-			contact.Id = id;
-			contact.Surname = surname;
-			contact.Name = name;
-			contact.Midname = midname;
-			contact.Phone = phone;
-			contact.Address = address;
-			contact.Description = description;
+			var contact = new Contact(id, surname, name, midname, phone, address, description);
+
 			_context.Contacts.Add(contact);
 			return contact;
 		}

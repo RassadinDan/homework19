@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "PKE+KnqbrtSQiAz/ZMfKajfZi7kVIlBh7pkaB9cazRybeFqfVXBxRdFL83Njl3O2al1QIjk18thWAiCJ3n8sDQ==",
+  "dgSpecHash": "MtfJL6YBQwIJ7U3BXhbziwT3TsI15Qcis5rZIHVzofpbhnyUWCZBUOJvjYGoPgig+CJWrfdnN8x0PLe3t0TQww==",
   "success": true,
   "projectFilePath": "D:\\Work\\Homework\\Homework19\\Homework19\\Homework19.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Данька\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Данька\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\Данька\\.nuget\\packages\\fluentvalidation\\11.6.0\\fluentvalidation.11.6.0.nupkg.sha512",
+    "C:\\Users\\Данька\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\Данька\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.6.0\\fluentvalidation.dependencyinjectionextensions.11.6.0.nupkg.sha512",
     "C:\\Users\\Данька\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Данька\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\Данька\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

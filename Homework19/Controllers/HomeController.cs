@@ -1,4 +1,7 @@
-﻿using Homework19.Models;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation.Results;
+using Homework19.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
@@ -12,11 +15,14 @@ namespace Homework19.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        private IValidator<Contact> _validator;
+
         public ContactBook book;
 
-		public HomeController(ApplicationDbContext context)
+		public HomeController(ApplicationDbContext context, IValidator<Contact> validator)
         {
             _context = context;
+            _validator = validator;
             book = new ContactBook(_context);
             book.Fill();
         }
@@ -51,26 +57,27 @@ namespace Homework19.Controllers
         public IActionResult Create()
         {
             ViewData["Title"] = "Новый контакт";
-            return View();
+            return View(book);
         }
 
-        // POST: HomeController/CreateNew
+        // POST: HomeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([FromForm(Name = "surname")] string surname, [FromForm(Name = "name")] string name,
-            [FromForm(Name = "midname")] string midname, [FromForm(Name ="phone)")] int phone, [FromForm(Name = "address")] string address,
-            [FromForm(Name = "description")] string description)
+        public async Task<IActionResult> Create(Contact contact)
         {
-            if (ModelState.IsValid)
-            {
-				var contact = book.factory.CreateContact(surname, name, midname, phone, address, description);
 
-                _context.Contacts.Add(contact);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+			ValidationResult result= await _validator.ValidateAsync(contact);
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+
+                return Redirect(nameof(Create));
             }
 
-            else{ return BadRequest(); }
+            _context.SaveChanges();
+            TempData["notice"] = "Contact created successfully";
+
+            return Redirect(nameof(Index)); 
         }
 
         // GET: HomeController/Edit/5
@@ -87,7 +94,7 @@ namespace Homework19.Controllers
         // POST: HomeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditForm(int id, IFormCollection collection,
+        public ActionResult Edit(int id, IFormCollection collection,
             string surname, string name, string midname, int phone, string address, string description)
         {
             if(id < 0 || !ModelState.IsValid)
