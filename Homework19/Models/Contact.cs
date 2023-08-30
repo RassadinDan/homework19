@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Homework19.Models
 {
     [Table("Contacts")]
+    [Bind("Surname", "Name", "Midname", "Phone", "Address", "Description")]
     public class Contact
     {
         [Key]

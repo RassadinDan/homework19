@@ -2,13 +2,13 @@
 @model Contact
 @{
 }
-<!Doctype html>
+
 <html>
 <head>
 	<link rel="stylesheet" href="~/css/style.css" />
 </head>
 <body>
-	<form name="editForm" action="~/Home/EditForm/@(Model.Id-1)" method="post">
+	<form name="editForm" controller = "Home" action="Edit/@(Model.Id-1)" method="post">
 
 		<label for="surname">
 			Фамилия
@@ -28,7 +28,7 @@
 		<label for="phone">
 			Телефон
 		</label><br />
-		<input type="tel" name="phone" value="@Model.Phone" /><br />
+		<input type="number" name="phone" value="@Model.Phone" /><br />
 
 		<label for="address">
 			Адрес

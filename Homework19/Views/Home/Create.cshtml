@@ -1,20 +1,11 @@
 ﻿@using Homework19.Controllers
 @using Homework19.Models
+@using Homework19.Views;
 
-@model ContactBook
 
-@functions{
+@model Homework19.Views.Home.CreateModel
 
-	public Contact CreateContact([FromForm(Name = "surname")] string surname, [FromForm(Name = "name")] string name,
-			[FromForm(Name = "midname")] string midname, [FromForm(Name = "phone)")] int phone, [FromForm(Name = "address")] string address,
-			[FromForm(Name = "description")] string description)
-	{
-		Contact contact = Model.factory.CreateContact(surname, name, midname, phone, address, description);
-		return contact;
-	}
-}
 
-<!Doctype html>
 <html>
 	<head>
 		<link rel="stylesheet" href="~/css/style.css" />
@@ -24,46 +15,42 @@
 			@ViewData["Title"]
 		</h1>
 
-		<form name="createForm" asp-controller="Home" asp-action="Create" method="post">
+		<form name="createForm" controller="Home" action="CreateNew" method="post">
 
-			<label for="surname">
+			<label for="Surname">
 				Фамилия
 			</label><br />
-			<input type="text" asp-for="surname" value=""/><br />
+			<input type="text" name="Surname" value=""/><br />
 
-			<label for="name">
+			<label for="Name">
 				Имя
 			</label><br />
-			<input type="text" asp-for="name" value=""/><br />
+			<input type="text" name="Name" value=""/><br />
 
-			<label for="midname">
+			<label for="Midname">
 				Отчество
 			</label><br />
-			<input type="text" asp-for="midname" value=""/><br />
+			<input type="text" name="Midname" value=""/><br />
 
-			<label for="phone">
+			<label for="Phone">
 				Телефон
 			</label><br />
-			<input type="tel" asp-for="phone" value=""/><br />
+			<input type="number" name="Phone" value=""/><br />
 
-			<label for="address">
+			<label for="Address">
 				Адрес
 			</label><br />
-			<input type="text" asp-for="address" value=""/><br />
+			<input type="text" name="Address" value=""/><br />
 
-			<label for="description">
+			<label for="Description">
 				Описание
 			</label><br />
-			<input type="text" asp-for ="description" value=""/><br />
+			<input type="text" name ="Description" value=""/><br />
 
 			<p><input type="submit" value="Создать"/>
 
-				<code>
-					@{
-					//Context.Items.TryGetValue()
-					//var contact = CreateContact();
-				}
-				</code></p>
 		</form>
+
+
 	</body>
 </html>

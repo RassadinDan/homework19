@@ -11,12 +11,10 @@ namespace Homework19.Models
 
 		public ContactFactory factory;
 
-		private readonly ApplicationDbContext _context;
-		public ContactBook(ApplicationDbContext context)
+		public ContactBook()
 		{
 			Contacts = new List<Contact>();
-			_context = context;
-			factory= new ContactFactory(_context);
+			factory= new ContactFactory();
 		}
 
 		/// <summary>

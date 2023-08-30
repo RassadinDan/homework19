@@ -2,6 +2,7 @@
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Homework19.Models;
+using Homework19.Views.Home;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
@@ -13,17 +14,15 @@ namespace Homework19.Controllers
     [Controller]
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
 
-        private IValidator<Contact> _validator;
+        //private IValidator<Contact> _validator;
 
         public ContactBook book;
 
-		public HomeController(ApplicationDbContext context, IValidator<Contact> validator)
+		public HomeController()
         {
-            _context = context;
-            _validator = validator;
-            book = new ContactBook(_context);
+            book = new ContactBook();
             book.Fill();
         }
 
@@ -46,7 +45,7 @@ namespace Homework19.Controllers
         {
             if(id <= -1 && id > book.Contacts.Count)
             {
-                return NotFound();
+                return Redirect("~/Error");
             }
 
             return View(book.Contacts[id]);
@@ -57,27 +56,32 @@ namespace Homework19.Controllers
         public IActionResult Create()
         {
             ViewData["Title"] = "Новый контакт";
-            return View(book);
+            return View();
         }
 
-        // POST: HomeController/Create
-        [HttpPost]
+		// POST: HomeController/Create
+		[HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Contact contact)
+        [Route("CreatePost")]
+        public IActionResult CreateNew([Bind("Surname, Name, Midname, Phone, Address, Description")] Contact contact)
         {
+            var validator = new ContactValidator();
+			ValidationResult result= validator.Validate(contact);
 
-			ValidationResult result= await _validator.ValidateAsync(contact);
             if (!result.IsValid)
             {
-                result.AddToModelState(this.ModelState);
+                var errors = result.Errors.ToArray();
+                foreach(var error in errors)
+                {
+                    Console.WriteLine($"{error.ErrorMessage}");
+                }
+				return View("Error");
+			}
 
-                return Redirect(nameof(Create));
-            }
-
-            _context.SaveChanges();
-            TempData["notice"] = "Contact created successfully";
-
-            return Redirect(nameof(Index)); 
+            //_context.SaveChanges();
+            //TempData["notice"] = "Contact created successfully";
+            Console.WriteLine($"");
+            return RedirectToAction(nameof(Index)); 
         }
 
         // GET: HomeController/Edit/5
@@ -86,9 +90,12 @@ namespace Homework19.Controllers
         {
             if(id < 0)
             {
-                return BadRequest();
+                return Redirect("~/Error");
             }
-            else { return View(book.Contacts[id]); }
+            else 
+            { 
+                return View(book.Contacts[id]); 
+            }
 		}
 
         // POST: HomeController/Edit/5
@@ -99,19 +106,22 @@ namespace Homework19.Controllers
         {
             if(id < 0 || !ModelState.IsValid)
             {
-				return BadRequest(); ;
+				return Redirect(nameof(Error));
             }
             else 
             {
-                var contact = book.Contacts[id];
-                contact.Surname= surname;
-                contact.Name= name;
-                contact.Midname= midname;
-                contact.Phone= phone;
-                contact.Address = address;
-                contact.Description= description;
-                _context.SaveChanges();
-                return Redirect(nameof(Index));
+                using (var context = new ApplicationDbContext())
+                {
+                    var contact = book.Contacts[id];
+                    contact.Surname = surname;
+                    contact.Name = name;
+                    contact.Midname = midname;
+                    contact.Phone = phone;
+                    contact.Address = address;
+                    contact.Description = description;
+                    context.SaveChanges();
+                }
+                return Redirect("~/Index");
             }
         }
 
@@ -128,12 +138,18 @@ namespace Homework19.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return Redirect("~/Index");
             }
             catch
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult Error() 
+        { 
+            return View(); 
         }
     }
 }

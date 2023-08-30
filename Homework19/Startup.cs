@@ -1,8 +1,11 @@
 ﻿using FluentValidation;
+using Homework19.Controllers;
 using Homework19.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.AspNetCore.Routing.Patterns;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Net;
@@ -19,12 +22,13 @@ namespace Homework19
 			services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(@"DataSource = (localdb)\MSSQLLocalDB;InitialCatalog = ContactData;"));
 
 			services.AddScoped<IValidator<Contact>, ContactValidator>();
+			services.AddAntiforgery();
 		}
 		public void Configure(IApplicationBuilder app)
 		{
 			// Настройка конвеера обработки запросов, подключения необходимого ПО промежуточного слоя.
 
-			app.UseExceptionHandler(options => 
+			app.UseExceptionHandler(options =>
 			{
 				options.Run(
 					async context =>
@@ -32,6 +36,7 @@ namespace Homework19
 						context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 						context.Response.ContentType = "text/html";
 						var exceptionObject = context.Features.Get<IExceptionHandlerFeature>();
+
 						if(exceptionObject != null) 
 						{
 							var errorMessage = $"<b>Exception Error: {exceptionObject.Error.Message} </b> {exceptionObject.Error.StackTrace}";
@@ -46,9 +51,9 @@ namespace Homework19
 			app.UseAuthorization();
 
 
-			app.UseEndpoints(endpoints => { endpoints.MapControllerRoute(
+			app.UseEndpoints(endpoints => {endpoints.MapControllerRoute(
 				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}"); 
+				pattern: "{controller=Home}/{action=Index}/{id?}");
 			});
 
 			app.UseMvc(
@@ -57,6 +62,28 @@ namespace Homework19
 					r.MapRoute(
 						name: "default",
 						template: "{controller=Home}/{action=Index}/{id?}");
+
+					//r.MapRoute(
+					//	name: "CreatePost",
+					//	template: "{controller=Home}/{action=CreateNew}",
+					//	defaults: new { controller = "Home", action = "CreateNew" } );
+					//	new { HttpMethod = new HttpMethodRouteConstraint("POST") });
+
+					r.MapPost(
+						template: "{controller=Home}/{action=CreateNew}",
+						async handler => 
+							await handler.Response.WriteAsync("Post request is processing"));
+
+					r.MapMiddlewarePost(
+						template: "{controller=Home}/{action=CreateNew}",
+						app =>
+						{
+							app.Run(async context =>
+							{
+								await context.Response.WriteAsync("somthing is happening");
+								context.Response.HttpContext.Response.ContentType = "text/html";
+							});
+						});
 				});
 		}
 	}

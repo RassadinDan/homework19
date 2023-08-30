@@ -13,7 +13,8 @@ namespace Homework19
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB;Database = ContactData;Trusted_Connection = true");
+			//Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ContactData;Integrated Security=True
+			optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = ContactData;Integrated Security = true");
         }
         public ApplicationDbContext() { }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
