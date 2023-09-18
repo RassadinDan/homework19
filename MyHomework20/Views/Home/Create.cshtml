@@ -1,0 +1,52 @@
+﻿@page
+@using MyHomework20.Models;
+@model MyHomework20.Views.Home.CreateModel
+@{
+}
+
+<html>
+	<head>
+
+	</head>
+
+	<body>
+		<h1>Новый контакт</h1>
+	@using (Html.BeginForm("CreateNew", "Home", FormMethod.Post, true))
+	{
+		@Html.AntiForgeryToken();
+
+		<label for="Surname">
+			Фамилия
+		</label><br />
+		<input type="text" name="Surname" required/><br />
+
+		<label for="Name">
+			Имя
+		</label><br />
+		<input type="text" name="Name" requored/><br />
+
+		<label for="Midname">
+			Отчество
+		</label><br />
+		<input type="text" name="Midname" required/><br />
+
+		<label for="Phone">
+			Телефон
+		</label><br />
+		<input type="text" name="Phone" required/><br />
+
+		<label for="Address">
+			Адрес
+		</label><br />
+		<input type="text" name="Address" required/><br />
+
+		<label for="Description">
+			Описание
+		</label><br />
+		<input type="text" @* asp-for="Description" *@ name="Description"/><br />
+
+		<input type="submit" value="Создать">
+		Html.EndForm();
+	}
+	</body>
+</html>

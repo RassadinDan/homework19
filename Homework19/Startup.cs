@@ -51,10 +51,10 @@ namespace Homework19
 			app.UseAuthorization();
 
 
-			app.UseEndpoints(endpoints => {endpoints.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
-			});
+			//app.UseEndpoints(endpoints => {endpoints.MapControllerRoute(
+			//	name: "default",
+			//	pattern: "{controller=Home}/{action=Index}/{id?}");
+			//});
 
 			app.UseMvc(
 				r =>
@@ -63,27 +63,22 @@ namespace Homework19
 						name: "default",
 						template: "{controller=Home}/{action=Index}/{id?}");
 
-					//r.MapRoute(
-					//	name: "CreatePost",
-					//	template: "{controller=Home}/{action=CreateNew}",
-					//	defaults: new { controller = "Home", action = "CreateNew" } );
-					//	new { HttpMethod = new HttpMethodRouteConstraint("POST") });
-
+					//Отпарвляет в виде ответа надпись о том, что что-то происходит
 					r.MapPost(
 						template: "{controller=Home}/{action=CreateNew}",
 						async handler => 
 							await handler.Response.WriteAsync("Post request is processing"));
 
-					r.MapMiddlewarePost(
-						template: "{controller=Home}/{action=CreateNew}",
-						app =>
-						{
-							app.Run(async context =>
-							{
-								await context.Response.WriteAsync("somthing is happening");
-								context.Response.HttpContext.Response.ContentType = "text/html";
-							});
-						});
+					//r.MapMiddlewarePost(
+					//	template: "{controller=Home}/{action=CreateNew}",
+					//	app =>
+					//	{
+					//		app.Run(async context =>
+					//		{
+					//			await context.Response.WriteAsync("somthing is happening");
+					//			context.Response.HttpContext.Response.ContentType = "text/html";
+					//		});
+					//	});
 				});
 		}
 	}

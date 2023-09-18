@@ -14,8 +14,10 @@
 		<h1 class="title">
 			@ViewData["Title"]
 		</h1>
+		@using(Html.BeginForm("CreateNew", "Home", FormMethod.Post))
+		{
+			@Html.AntiForgeryToken()
 
-		<form name="createForm" controller="Home" action="CreateNew" method="post">
 
 			<label for="Surname">
 				Фамилия
@@ -47,10 +49,11 @@
 			</label><br />
 			<input type="text" name ="Description" value=""/><br />
 
-			<p><input type="submit" value="Создать"/>
+			<p>
+				<button type="submit" form="createForm">Создать</button>
+			</P>
 
-		</form>
-
+		}
 
 	</body>
 </html>

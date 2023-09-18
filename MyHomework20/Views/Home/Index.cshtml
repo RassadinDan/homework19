@@ -1,0 +1,60 @@
+﻿@using MyHomework20.Models;
+
+@model List<Contact>
+@{
+	ViewData["Title"] = "Контакты";
+}
+
+<html>
+<head>
+	<link rel="stylesheet" href="~/css/style.css"/>
+</head>
+
+<body>
+	<h1 class="title">
+		@ViewData["Title"]
+	</h1>
+	<h2 class="contacts">
+		Некие контакты
+	</h2>
+	<table class="contacts" border="1">
+		<tr>
+			<th>
+				ID
+			</th>
+			<th>
+				Фамилия
+			</th>
+			<th>
+				Имя
+			</th>
+			<th>
+				Отчество
+			</th>
+		</tr>
+
+		@foreach(var contact in Model)
+		{
+		<tr>
+			<td>
+				<a href="~/Home/Details/@(contact.Id)">
+					@contact.Id
+				</a>
+			</td>
+			<td>
+				@contact.Surname
+			</td>
+			<td>
+				@contact.Name
+			</td>
+			<td>
+				@contact.Midname
+			</td>
+		</tr>
+		}
+	</table>
+	<a href="~/Home/Create">
+		Создать новый контакт
+		</a>
+</body>
+</html>

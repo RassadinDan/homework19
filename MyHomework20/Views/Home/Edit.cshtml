@@ -1,0 +1,46 @@
+﻿@using MyHomework20.Models
+@model Contact
+@{
+}
+
+<html>
+<head>
+	<link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+	<form name="editForm" controller = "Home" action="EditContact/@(Model.Id)" method="post">
+
+		<label for="surname">
+			Фамилия
+		</label><br />
+		<input type="text" name="Surname" value="@Model.Surname" /><br />
+
+		<label for="name">
+			Имя
+		</label><br />
+		<input type="text" name="Name" value="@Model.Name" /><br />
+
+		<label for="midname">
+			Отчество
+		</label><br />
+		<input type="text" name="Midname" value="@Model.Midname" /><br />
+
+		<label for="phone">
+			Телефон
+		</label><br />
+		<input type="number" name="phone" value="@Model.Phone" /><br />
+
+		<label for="address">
+			Адрес
+		</label><br />
+		<input type="text" name="Address" value="@Model.Address" /><br />
+
+		<label for="description">
+			Описание
+		</label><br />
+		<input type="text" name="Description" value="@Model.Description" /><br />
+
+		<p><input type="submit" value="Сохранить изменения" /></p>
+	</form>
+</body>
+</html>

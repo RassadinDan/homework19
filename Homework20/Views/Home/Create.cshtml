@@ -1,0 +1,59 @@
+﻿@using Homework20.Controllers
+@using Homework20.Models
+@using Homework20.Views;
+
+
+@model Homework20.Views.Home.CreateModel
+
+
+<html>
+	<head>
+		<link rel="stylesheet" href="~/css/style.css" />
+	</head>
+	<body>
+		<h1 class="title">
+			@ViewData["Title"]
+		</h1>
+		@using(Html.BeginForm("CreateNew", "Home", FormMethod.Post))
+		{
+			@Html.AntiForgeryToken()
+
+
+			<label for="Surname">
+				Фамилия
+			</label><br />
+			<input type="text" name="Surname" value=""/><br />
+
+			<label for="Name">
+				Имя
+			</label><br />
+			<input type="text" name="Name" value=""/><br />
+
+			<label for="Midname">
+				Отчество
+			</label><br />
+			<input type="text" name="Midname" value=""/><br />
+
+			<label for="Phone">
+				Телефон
+			</label><br />
+			<input type="number" name="Phone" value=""/><br />
+
+			<label for="Address">
+				Адрес
+			</label><br />
+			<input type="text" name="Address" value=""/><br />
+
+			<label for="Description">
+				Описание
+			</label><br />
+			<input type="text" name ="Description" value=""/><br />
+
+			<p>
+				<button type="submit" form="createForm">Создать</button>
+			</P>
+
+		}
+
+	</body>
+</html>
