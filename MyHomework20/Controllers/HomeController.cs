@@ -102,36 +102,37 @@ namespace MyHomework20.Controllers
 			}
 		}
 
-		[HttpPost]
+		[HttpPut]
 		public IActionResult EditContact (int id, [FromForm]Contact editedContact)
 		{
+			Console.Write("test-test");
+			var validator = new ContactValidator();
+			var error = validator.Validate(editedContact);
+			var errors = error.Errors.ToArray();
+
+			foreach (var e in errors)
+			{
+				Console.WriteLine($"{e.ErrorCode}, {e.ErrorMessage}, attempted value:{e.AttemptedValue}");
+			}
+
 			using(var db = new ContactDBContext())
 			{
-				var cd = db.Contacts.Find(id);
-				//var validator = new ContactValidator();
-				//var errors = validator.Validate(editedContact);
-				//foreach(var error in errors.Errors) 
-				//{
-				//	Console.WriteLine($"error code:{error.ErrorCode}, error message:{error.ErrorMessage}");
-				//}
+				var cd = db.Contacts.FirstOrDefault(c=> c.Id == id);
 
-				if (cd != null)
+				if (cd == null)
 				{
-					db.Contacts.Update(cd);
-					cd.Surname = editedContact.Surname;
-					cd.Name = editedContact.Name;
-					cd.Midname = editedContact.Midname;
-					cd.Phone = editedContact.Phone;
-					cd.Address = editedContact.Address;
-					cd.Description = editedContact.Description;
-					db.SaveChanges();
+					return NotFound();
 				}
-				else
-				{
-					return RedirectToAction(nameof(Error));
-				}
+				cd.Surname = editedContact.Surname;
+				cd.Name = editedContact.Name;
+				cd.Midname = editedContact.Midname;
+				cd.Phone = editedContact.Phone;
+				cd.Address = editedContact.Address;
+				cd.Description = editedContact.Description;
+				db.Contacts.Update(cd);
+				db.SaveChanges();
 			}
-			return RedirectToAction(nameof(Index));
+			return Ok();
 		}
 
 		[HttpDelete]
@@ -151,7 +152,8 @@ namespace MyHomework20.Controllers
 
 		#region to do
 		///Доработать методы изменения и удаления записей, пока что они выдают ошибку  404 или иные.
-		///До тех пор пока эти ошибки не будут устранены, работа не закончена.
+		///Метод Delete() заработал, но не отработал полностью, по какой-то причине он не вернулся в Index() в конце.
+		///Это нужно устранить, и Edit() все еще выдает 404 код.
 		#endregion
 
 	}

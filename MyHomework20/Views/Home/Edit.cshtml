@@ -8,7 +8,36 @@
 	<link rel="stylesheet" href="~/css/style.css" />
 </head>
 <body>
-	<form name="editForm" controller = "Home" action="EditContact/@(Model.Id)" method="post">
+	@using (Html.BeginForm("EditContact", "Home", FormMethod.Put))
+	{
+		@Html.HiddenFor(model => model.Id)
+		<div class="form-group">
+			@Html.LabelFor(model => model.Surname)
+			@Html.TextBoxFor(model => model.Surname, new{@class = "form-control"})
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.Name)
+			@Html.TextBoxFor(model => model.Name, new{@class = "form-control"})
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.Midname)
+			@Html.TextBoxFor(model => model.Midname, new{@class = "form-control"})
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.Phone)
+			@Html.TextBoxFor(model => model.Phone, new{@class = "form-control"})
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.Address)
+			@Html.TextBoxFor(model => model.Address, new{@class = "form-control"})
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.Description)
+			@Html.TextBoxFor(model => model.Description, new{@class = "form-control"})
+		</div>
+		<button type="submit" class="btn btn-primary">Сохранить</button>
+	}
+	@* <form name="editForm" controller = "Home" action="EditContact/@(Model.Id)" method="put">
 
 		<label for="surname">
 			Фамилия
@@ -41,6 +70,6 @@
 		<input type="text" name="Description" value="@Model.Description" /><br />
 
 		<p><input type="submit" value="Сохранить изменения" /></p>
-	</form>
+	</form> *@
 </body>
 </html>
