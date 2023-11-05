@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using MyHomework20.Models;
 using System.Diagnostics;
 
@@ -13,12 +14,16 @@ namespace MyHomework20.Controllers
 			_logger = logger;
 		}
 
+		/// <summary>
+		/// Основная страница с выводом контактов.
+		/// </summary>
+		/// <returns></returns>
 		public IActionResult Index()
 		{
 			var contacts = new List<Contact>();
-			using(ContactDBContext db = new ContactDBContext())
+			using (ContactDBContext db = new ContactDBContext())
 			{
-				foreach(Contact contact in db.Contacts)
+				foreach (Contact contact in db.Contacts)
 				{
 					contacts.Add(contact);
 				}
@@ -26,6 +31,11 @@ namespace MyHomework20.Controllers
 			return View(contacts);
 		}
 
+		/// <summary>
+		/// Вывод подробной информации о выбранном контакте
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public IActionResult Details(int id)
 		{
 			if (id > 0)
@@ -37,7 +47,7 @@ namespace MyHomework20.Controllers
 						var contact = db.Contacts.Find(id);
 						return View(contact);
 					}
-					catch(Exception ex)
+					catch (Exception ex)
 					{
 						Console.WriteLine(ex.Message);
 						return RedirectToAction(nameof(Error));
@@ -52,12 +62,21 @@ namespace MyHomework20.Controllers
 
 		}
 
+		/// <summary>
+		/// Загрузка формы для заполнения данных нового контакта.
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
-		public IActionResult Create() 
+		public IActionResult Create()
 		{
 			return View();
 		}
 
+		/// <summary>
+		/// Отправка данных нового контакта на сервер.
+		/// </summary>
+		/// <param name="_contact"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult CreateNew(Contact _contact)
@@ -65,9 +84,9 @@ namespace MyHomework20.Controllers
 			var validator = new ContactValidator();
 			var error = validator.Validate(_contact);
 
-			foreach(var _error in error.Errors) { Console.WriteLine($"error:{_error.ErrorCode}, message: {_error.ErrorMessage}, attempted value: {_error.AttemptedValue}"); }
+			foreach (var _error in error.Errors) { Console.WriteLine($"error:{_error.ErrorCode}, message: {_error.ErrorMessage}, attempted value: {_error.AttemptedValue}"); }
 
-			using (ContactDBContext db = new ContactDBContext()) 
+			using (ContactDBContext db = new ContactDBContext())
 			{
 				try
 				{
@@ -87,74 +106,86 @@ namespace MyHomework20.Controllers
 			return View();
 		}
 
+		/// <summary>
+		/// Универсальная страница ошибки.
+		/// </summary>
+		/// <returns></returns>
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
+		/// <summary>
+		/// Форма для обновления данных контакта.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public IActionResult Edit(int id)
 		{
-			using(var db = new ContactDBContext())
+			using (var db = new ContactDBContext())
 			{
 				var contact = db.Contacts.Find(id);
+				if(contact == null)
+				{
+					return NotFound();
+				}
 				return View(contact);
 			}
 		}
 
-		[HttpPut]
+		/// <summary>
+		/// Метод отправки обновленных данных контакта на сервер.
+		/// </summary>
+		/// <param name="id">идентификатор контакта</param>
+		/// <param name="editedContact">полученные изменения</param>
+		/// <returns></returns>
+		[HttpPost("Home/EditContact/{id}")]
 		public IActionResult EditContact (int id, [FromForm]Contact editedContact)
 		{
-			Console.Write("test-test");
-			var validator = new ContactValidator();
-			var error = validator.Validate(editedContact);
-			var errors = error.Errors.ToArray();
+			Console.Write($"--->{editedContact.Id}, {editedContact.Surname}, {editedContact.Name}, {editedContact.Midname}," +
+				$"{editedContact.Phone}, {editedContact.Address}, {editedContact.Description}.\n");
 
-			foreach (var e in errors)
+			using(var db = new ContactDBContext()) 
 			{
-				Console.WriteLine($"{e.ErrorCode}, {e.ErrorMessage}, attempted value:{e.AttemptedValue}");
-			}
+				var existingContact = db.Contacts.FirstOrDefault(c=> c.Id == id);
 
-			using(var db = new ContactDBContext())
-			{
-				var cd = db.Contacts.FirstOrDefault(c=> c.Id == id);
-
-				if (cd == null)
+				if (existingContact == null)
 				{
 					return NotFound();
 				}
-				cd.Surname = editedContact.Surname;
-				cd.Name = editedContact.Name;
-				cd.Midname = editedContact.Midname;
-				cd.Phone = editedContact.Phone;
-				cd.Address = editedContact.Address;
-				cd.Description = editedContact.Description;
-				db.Contacts.Update(cd);
+
+				existingContact.Surname = editedContact.Surname;
+				existingContact.Name = editedContact.Name;
+				existingContact.Midname = editedContact.Midname;
+				existingContact.Phone = editedContact.Phone;
+				existingContact.Address = editedContact.Address;
+				existingContact.Description = editedContact.Description;
+
 				db.SaveChanges();
 			}
-			return Ok();
+			return RedirectToAction(nameof(Index));
 		}
 
+		/// <summary>
+		/// Удаление данных контакта.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		[HttpDelete]
 		public IActionResult Delete(int id)
 		{
 			using(var db = new ContactDBContext())
 			{
-				var cd = db.Contacts.Find(id);
-				if (cd != null)
+				var existingContact = db.Contacts.FirstOrDefault(c => c.Id == id);
+
+				if (existingContact != null)
 				{
-					db.Contacts.Remove(cd);
+					db.Contacts.Remove(existingContact);
 					db.SaveChanges();
 				}
 			}
 			return RedirectToAction(nameof(Index));
 		}
-
-		#region to do
-		///Доработать методы изменения и удаления записей, пока что они выдают ошибку  404 или иные.
-		///Метод Delete() заработал, но не отработал полностью, по какой-то причине он не вернулся в Index() в конце.
-		///Это нужно устранить, и Edit() все еще выдает 404 код.
-		#endregion
-
 	}
 }

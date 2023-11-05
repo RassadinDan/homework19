@@ -11,22 +11,23 @@ namespace MyHomework20.Models
         [Key]
         public int Id { get; set; }
 
-        //[Required]
+        [FromForm]
         public string Surname { get; set; }
 
-        //[Required]
+        [FromForm]
         public string Name { get; set; }
 
-        //[Required]
+        [FromForm]
         public string Midname { get; set; }
 
         [MaxLength(6)]
+        [FromForm]
         public string Phone { get; set; }
 
-        //[Required]
+        [FromForm]
         public string Address { get; set; }
 
-        //[Required]
+        [FromForm]
         public string Description { get; set; }
 
         public Contact(/*int id, string surname, string name, string midname, int phone, string address, string description*/)
