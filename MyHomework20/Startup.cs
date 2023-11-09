@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MyHomework20
 {
@@ -7,6 +9,17 @@ namespace MyHomework20
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc();
+
+			services.AddIdentity<User, IdentityRole>();
+
+			services.Configure<IdentityOptions>(options =>
+			{
+				options.Password.RequiredLength = 6;
+
+				options.Lockout.MaxFailedAccessAttempts = 10;
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+				options.Lockout.AllowedForNewUsers = true;
+			});
 		}
 		public void Configure(IApplicationBuilder app)
 		{

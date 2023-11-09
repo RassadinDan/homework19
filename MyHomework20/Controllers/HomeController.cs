@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using MyHomework20.Models;
 using System.Diagnostics;
@@ -36,6 +37,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
+		[Authorize]
 		public IActionResult Details(int id)
 		{
 			if (id > 0)
@@ -67,6 +69,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
+		[Authorize]
 		public IActionResult Create()
 		{
 			return View();
@@ -79,6 +82,7 @@ namespace MyHomework20.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize]
 		public IActionResult CreateNew(Contact _contact)
 		{
 			var validator = new ContactValidator();
@@ -172,7 +176,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		[HttpDelete]
+		//[HttpDelete]
 		public IActionResult Delete(int id)
 		{
 			using(var db = new ContactDBContext())
