@@ -20,6 +20,15 @@ namespace MyHomework20
 				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
 				options.Lockout.AllowedForNewUsers = true;
 			});
+
+			services.ConfigureApplicationCookie(options =>
+			{
+				options.Cookie.HttpOnly = true;
+				options.Cookie.Expiration = TimeSpan.FromMinutes(10);
+				options.LoginPath = "/User/Login";
+				options.LogoutPath = "/User/Logout";
+				options.SlidingExpiration = true;
+			});
 		}
 		public void Configure(IApplicationBuilder app)
 		{
