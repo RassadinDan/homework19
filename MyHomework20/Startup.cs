@@ -32,7 +32,13 @@ namespace MyHomework20
 		}
 		public void Configure(IApplicationBuilder app)
 		{
-			// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+			app.UseHttpsRedirection();
+			app.UseStaticFiles();
+
+			app.UseRouting();
+
+			app.UseAuthorization();
+
 		}
 	}
 }
