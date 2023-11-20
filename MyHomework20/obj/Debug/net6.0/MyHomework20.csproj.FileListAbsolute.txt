@@ -81,3 +81,8 @@ D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\FluentValidation.dll
 D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
 D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net6.0\MyHomework20.MvcApplicationPartsAssemblyInfo.cs
+D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll

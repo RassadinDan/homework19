@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyHomework20.DataContext;
 
 namespace MyHomework20.Data
 {
-	public class DbInitializer
+    public class DbInitializer
 	{
 		public static void Initialize(ContactDBContext context)
 		{

@@ -1,16 +1,29 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MyHomework20.DataContext;
 
 namespace MyHomework20
 {
 	public class Startup
 	{
+		public IConfiguration Configuration { get; }
+
+		public Startup(IConfiguration configuration)
+		{
+			Configuration = configuration;
+		}
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc();
+			services.AddMvc(options =>
+			{
+				options.EnableEndpointRouting = false;
+			});
 
-			services.AddIdentity<User, IdentityRole>();
+			services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ContactDBContext>()
+                .AddDefaultTokenProviders();
 
 			services.Configure<IdentityOptions>(options =>
 			{
@@ -29,7 +42,12 @@ namespace MyHomework20
 				options.LogoutPath = "/User/Logout";
 				options.SlidingExpiration = true;
 			});
+
+			services.AddDbContext<ContactDBContext>(options => options.UseSqlServer(
+				Configuration.GetConnectionString("DefaultConnection")));
+			//services.AddTransient
 		}
+
 		public void Configure(IApplicationBuilder app)
 		{
 			app.UseHttpsRedirection();
@@ -37,7 +55,16 @@ namespace MyHomework20
 
 			app.UseRouting();
 
+			app.UseAuthentication();
+
 			app.UseAuthorization();
+
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute(
+					name: "default",
+					template: "{controller=Home}/{action=Index}/{id?}");
+			});
 
 		}
 	}
