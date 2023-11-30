@@ -1,20 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyHomework20.Models;
 
 namespace MyHomework20.DataContext
 {
-    public class ContactDBContext : DbContext
+    public class ContactDBContext : IdentityDbContext<User>
     {
         public DbSet<Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Contact>();
+            builder.Entity<User>().HasNoKey();
+            builder.Entity<IdentityUserLogin<string>>().HasNoKey();
+            builder.Entity<IdentityUserRole<string>>().HasNoKey();
+            builder.Entity<IdentityUserToken<string>>().HasNoKey();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ContactData;Integrated Security=True
             optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = ContactData;Integrated Security = true");
         }
 

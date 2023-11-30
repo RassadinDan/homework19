@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyHomework20.Models;
 
 namespace MyHomework20.Controllers
 {
-	public class UserController : Controller
+    public class UserController : Controller
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly SignInManager<User> _signInManager;
@@ -68,7 +69,8 @@ namespace MyHomework20.Controllers
 					return RedirectToAction("Index", "Home");
 				}
 				else
-				{ foreach(var identityError in createResult.Errors) 
+				{
+					foreach(var identityError in createResult.Errors) 
 					{
 						ModelState.AddModelError("", identityError.Description);
 					}

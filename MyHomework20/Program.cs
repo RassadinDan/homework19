@@ -8,7 +8,6 @@ using MyHomework20.DataContext;
 
 namespace MyHomework20
 {
-
     public class Program
 	{ 
 		public static void Main(string[] args)

@@ -1,2 +1,28 @@
-﻿@{
+﻿@using MyHomework20.Models;
+@model UserRegistration
+@{
 }
+
+<html>
+	<head>
+		<link rel="stylesheet" href="~/css/style.css" />
+	</head>
+	<body>
+	@using (Html.BeginForm("Register", "User", FormMethod.Post))
+	{
+		<div class="form-group">
+			@Html.LabelFor(model => model.UserName)
+			@Html.TextBoxFor(model => model.UserName, new{@class = "form-control"})
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.Password)
+			@Html.TextBoxFor(model => model.Password, new{@class = "form-control"})
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.ConfirmPassword)
+			@Html.TextBoxFor(model => model.ConfirmPassword, new{@class = "form-control"})
+		</div>
+		<button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+	}
+	</body>
+</html>

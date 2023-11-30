@@ -11,9 +11,9 @@ namespace MyHomework20.Data
 
 			if (context.Contacts.Any()) return;
 
-			using (var trans =  context.Database.BeginTransaction()) 
+			using (var trans =  context.Database.BeginTransaction())
 			{
-				foreach (var contact in context.Contacts) 
+				foreach (var contact in context.Contacts)
 				{
 					context.Contacts.Add(contact);
 				}

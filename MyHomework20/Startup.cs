@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyHomework20.DataContext;
+using MyHomework20.Models;
 
 namespace MyHomework20
 {
-	public class Startup
+    public class Startup
 	{
 		public IConfiguration Configuration { get; }
 
@@ -37,7 +38,7 @@ namespace MyHomework20
 			services.ConfigureApplicationCookie(options =>
 			{
 				options.Cookie.HttpOnly = true;
-				options.Cookie.Expiration = TimeSpan.FromMinutes(10);
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
 				options.LoginPath = "/User/Login";
 				options.LogoutPath = "/User/Logout";
 				options.SlidingExpiration = true;
