@@ -86,3 +86,5 @@ D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.AspNetCore.C
 D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Humanizer.dll
+D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll

@@ -1,11 +1,14 @@
 ﻿@using MyHomework20.Models;
+@using MyHomework20.Views;
 
 @model UserLogin
 @{
+	ViewData["Title"] = "Вход";
+	Layout = "_Layout";
 }
 <html>
 	<head>
-		<link rel="stylesheet" href="~/css/style.css" />
+		
 	</head>
 	<body>
 	@using (Html.BeginForm("Login", "User"))

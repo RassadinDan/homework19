@@ -11,7 +11,8 @@
           "FluentValidation.AspNetCore": "11.3.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.25",
           "Microsoft.EntityFrameworkCore": "7.0.10",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10"
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
+          "Microsoft.EntityFrameworkCore.Tools": "6.0.25"
         },
         "runtime": {
           "MyHomework20.dll": {}
@@ -80,6 +81,14 @@
           "lib/netstandard2.1/FluentValidation.DependencyInjectionExtensions.dll": {
             "assemblyVersion": "11.0.0.0",
             "fileVersion": "11.5.1.0"
+          }
+        }
+      },
+      "Humanizer.Core/2.8.26": {
+        "runtime": {
+          "lib/netstandard2.0/Humanizer.dll": {
+            "assemblyVersion": "2.8.0.0",
+            "fileVersion": "2.8.26.1919"
           }
         }
       },
@@ -212,6 +221,18 @@
         }
       },
       "Microsoft.EntityFrameworkCore.Analyzers/7.0.10": {},
+      "Microsoft.EntityFrameworkCore.Design/6.0.25": {
+        "dependencies": {
+          "Humanizer.Core": "2.8.26",
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.10"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.EntityFrameworkCore.Design.dll": {
+            "assemblyVersion": "6.0.25.0",
+            "fileVersion": "6.0.2523.52312"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/7.0.10": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.10",
@@ -234,6 +255,11 @@
             "assemblyVersion": "7.0.10.0",
             "fileVersion": "7.0.1023.36204"
           }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/6.0.25": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "6.0.25"
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/7.0.0": {
@@ -745,6 +771,13 @@
       "path": "fluentvalidation.dependencyinjectionextensions/11.5.1",
       "hashPath": "fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512"
     },
+    "Humanizer.Core/2.8.26": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
+      "path": "humanizer.core/2.8.26",
+      "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Cryptography.Internal/6.0.25": {
       "type": "package",
       "serviceable": true,
@@ -815,6 +848,13 @@
       "path": "microsoft.entityframeworkcore.analyzers/7.0.10",
       "hashPath": "microsoft.entityframeworkcore.analyzers.7.0.10.nupkg.sha512"
     },
+    "Microsoft.EntityFrameworkCore.Design/6.0.25": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YawyMKj1f+GkwHrxMIf9tX84sMGgLFa5YoRmyuUugGhffiubkVLYIrlm4W0uSy2NzX4t6+V7keFLQf7lRQvDmA==",
+      "path": "microsoft.entityframeworkcore.design/6.0.25",
+      "hashPath": "microsoft.entityframeworkcore.design.6.0.25.nupkg.sha512"
+    },
     "Microsoft.EntityFrameworkCore.Relational/7.0.10": {
       "type": "package",
       "serviceable": true,
@@ -828,6 +868,13 @@
       "sha512": "sha512-qRMzze1QbKa2vhlhjTxwjhJUMCI4qVDFWQCRq9Pdgf9mC+xLz0ZT/4ALEa0oZRicGzPZAqIIhKrHNAjgD4GsAQ==",
       "path": "microsoft.entityframeworkcore.sqlserver/7.0.10",
       "hashPath": "microsoft.entityframeworkcore.sqlserver.7.0.10.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools/6.0.25": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2iPMR+DHXh2Xn9qoJ0ejzdHblpns73e1pZ/pyRbYDQi0HPJyq1/pTYDda1owJ5W2lxAGDg8l5Fl1jVp97fTR1g==",
+      "path": "microsoft.entityframeworkcore.tools/6.0.25",
+      "hashPath": "microsoft.entityframeworkcore.tools.6.0.25.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/7.0.0": {
       "type": "package",

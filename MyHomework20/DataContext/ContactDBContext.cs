@@ -12,7 +12,7 @@ namespace MyHomework20.DataContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Contact>();
-            builder.Entity<User>().HasNoKey();
+            builder.Entity<User>(options => options.HasKey("UserName"));
             builder.Entity<IdentityUserLogin<string>>().HasNoKey();
             builder.Entity<IdentityUserRole<string>>().HasNoKey();
             builder.Entity<IdentityUserToken<string>>().HasNoKey();
@@ -20,7 +20,7 @@ namespace MyHomework20.DataContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = ContactData;Integrated Security = true");
+            optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = ContactData_1;Integrated Security = true");
         }
 
         public ContactDBContext() { }

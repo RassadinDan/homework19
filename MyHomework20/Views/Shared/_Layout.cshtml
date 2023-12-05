@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="~/MyHomework20.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <nav class="navbar navbar-light bg-light">
+        <div> @await Component.InvokeAsync("LogoutView") </div>
+    </nav>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">

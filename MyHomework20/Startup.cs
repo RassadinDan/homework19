@@ -46,7 +46,6 @@ namespace MyHomework20
 
 			services.AddDbContext<ContactDBContext>(options => options.UseSqlServer(
 				Configuration.GetConnectionString("DefaultConnection")));
-			//services.AddTransient
 		}
 
 		public void Configure(IApplicationBuilder app)

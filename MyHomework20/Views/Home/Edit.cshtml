@@ -1,13 +1,18 @@
 ﻿@using MyHomework20.Models
 @model Contact
 @{
+	ViewData["Title"] = "Редактирование";
+	Layout = "_Layout";
 }
 
 <html>
 <head>
-	<link rel="stylesheet" href="~/css/style.css" />
+	
 </head>
 <body>
+	<h1 class="title">
+		@ViewData["Title"]
+	</h1>
 	@using (Html.BeginForm("EditContact", "Home", new { id = Model.Id}, FormMethod.Post))
 	{
 		@Html.HiddenFor(model => model.Id)

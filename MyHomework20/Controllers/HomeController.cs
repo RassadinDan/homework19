@@ -38,7 +38,6 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		[Authorize]
 		public IActionResult Details(int id)
 		{
 			if (id > 0)
@@ -106,6 +105,7 @@ namespace MyHomework20.Controllers
 			}
 			return RedirectToAction("Index");
 		}
+
 		public IActionResult Privacy()
 		{
 			return View();
@@ -151,7 +151,7 @@ namespace MyHomework20.Controllers
 			Console.Write($"--->{editedContact.Id}, {editedContact.Surname}, {editedContact.Name}, {editedContact.Midname}," +
 				$"{editedContact.Phone}, {editedContact.Address}, {editedContact.Description}.\n");
 
-			using(var db = new ContactDBContext()) 
+			using(var db = new ContactDBContext())
 			{
 				var existingContact = db.Contacts.FirstOrDefault(c=> c.Id == id);
 

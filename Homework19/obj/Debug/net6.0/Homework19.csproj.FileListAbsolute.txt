@@ -85,3 +85,4 @@ D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\FluentValidation.dll
 D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 D:\Work\Homework\Homework19\Homework19\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
 D:\Work\Homework\Homework19\Homework19\obj\Debug\net6.0\Homework19.MvcApplicationPartsAssemblyInfo.cs
+D:\Work\Homework\Homework19\Homework19\obj\Debug\net6.0\Homework19.sourcelink.json

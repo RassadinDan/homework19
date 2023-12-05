@@ -1,7 +1,9 @@
-﻿@page
+﻿
 @using MyHomework20.Models;
 @model MyHomework20.Views.Home.CreateModel
 @{
+	ViewData["Title"] = "Новый контакт";
+	Layout = "_Layout";
 }
 
 <html>
@@ -10,7 +12,9 @@
 	</head>
 
 	<body>
-		<h1>Новый контакт</h1>
+		<h1 class="title">
+			@ViewData["Title"]
+		</h1>
 	@using (Html.BeginForm("CreateNew", "Home", FormMethod.Post, true))
 	{
 		@Html.AntiForgeryToken();
