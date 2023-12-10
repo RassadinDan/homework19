@@ -1,6 +1,8 @@
 ﻿@using MyHomework20.Models;
 @model UserRegistration
 @{
+	ViewData["Title"] = "Регистрация";
+	Layout = "_Layout";
 }
 
 <html>
@@ -8,6 +10,9 @@
 
 	</head>
 	<body>
+		<h1 class="title">
+			@ViewData["Title"]
+		</h1>
 	@using (Html.BeginForm("Register", "User", FormMethod.Post))
 	{
 		<div class="form-group">
