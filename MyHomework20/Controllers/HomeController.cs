@@ -126,6 +126,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
+		[Authorize(Roles = "Administrator")]
 		public IActionResult Edit(int id)
 		{
 			using (var db = new ContactDBContext())
@@ -146,6 +147,7 @@ namespace MyHomework20.Controllers
 		/// <param name="editedContact">полученные изменения</param>
 		/// <returns></returns>
 		[HttpPost("Home/EditContact/{id}")]
+		[Authorize(Roles = "Administrator")]
 		public IActionResult EditContact (int id, [FromForm]Contact editedContact)
 		{
 			Console.Write($"--->{editedContact.Id}, {editedContact.Surname}, {editedContact.Name}, {editedContact.Midname}," +
@@ -178,6 +180,7 @@ namespace MyHomework20.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		//[HttpDelete]
+		[Authorize(Roles = "Administrator")]
 		public IActionResult Delete(int id)
 		{
 			using(var db = new ContactDBContext())

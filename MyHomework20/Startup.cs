@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MyHomework20.Data;
 using MyHomework20.DataContext;
+using MyHomework20.Interfaces;
 using MyHomework20.Models;
 
 namespace MyHomework20
@@ -26,6 +28,8 @@ namespace MyHomework20
                 .AddEntityFrameworkStores<ContactDBContext>()
                 .AddDefaultTokenProviders();
 
+			services.AddTransient<IContactData, ContactDataApi>();
+			
 			services.Configure<IdentityOptions>(options =>
 			{
 				options.Password.RequiredLength = 6;
