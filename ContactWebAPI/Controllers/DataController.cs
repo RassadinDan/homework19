@@ -20,5 +20,17 @@ namespace ContactWebAPI.Controllers
 		{
 			Repository.AddContact(contact);
 		}
+
+		[HttpPut("{id}")]
+		public void Put([FromBody] Contact contact) 
+		{
+			Repository.UpdateContact(contact);
+		}
+
+		[HttpDelete("{id}")]
+		public void Delete(int id) 
+		{
+			Repository.RemoveContact(id);
+		}
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using ContactWebAPI.Models;
+using ContactWebAPI.DataContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContactWebAPI.Data
 {
@@ -6,9 +8,11 @@ namespace ContactWebAPI.Data
 	{
 		static List<Contact> data;
 
+		static readonly ContactDBContext context;
 		static Repository()
 		{
-			data = new List<Contact>();
+			context = new ContactDBContext();
+			data = context.Contacts.ToList<Contact>();
 		}
 
 		public static IEnumerable<Contact> GetAll() => data;
@@ -17,6 +21,17 @@ namespace ContactWebAPI.Data
 		{
 			contact.Id = data.Count;
 			data.Add(contact);
+		}
+
+		public static void UpdateContact(Contact contact)
+		{
+			int id = contact.Id;
+			data[id] = contact;
+		}
+
+		public static void RemoveContact(int id)
+		{
+			data.RemoveAt(id);
 		}
 	}
 }
