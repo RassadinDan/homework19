@@ -14,12 +14,12 @@ namespace MyHomework20
 		{
 			var init = BuildWebHost(args);
 
-			using (var scope = init.Services.CreateScope())
-			{
-				var s = scope.ServiceProvider;
-				var c = s.GetRequiredService<ContactDBContext>();
-				DbInitializer.Initialize(c);
-			}
+			//using (var scope = init.Services.CreateScope())
+			//{
+			//	var s = scope.ServiceProvider;
+			//	var c = s.GetRequiredService<ContactDBContext>();
+			//	DbInitializer.Initialize(c);
+			//}
 
 			init.Run();
 		}

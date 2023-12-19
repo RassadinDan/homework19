@@ -15,6 +15,13 @@ namespace ContactWebAPI.Controllers
 			return Repository.GetAll();
 		}
 
+		[HttpGet("{id}")]
+		//[Route("api/data/get/{id}")]
+		public Contact GetOne(int id) 
+		{
+			return Repository.GetById(id);
+		}
+
 		[HttpPost]
 		public void Post([FromBody] Contact contact)
 		{

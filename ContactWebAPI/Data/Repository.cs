@@ -17,21 +17,28 @@ namespace ContactWebAPI.Data
 
 		public static IEnumerable<Contact> GetAll() => data;
 
+		public static Contact GetById(int id)
+		{
+			return data.Find(contact => contact.Id == id);
+		}
+
 		public static void AddContact(Contact contact) 
 		{
 			contact.Id = data.Count;
 			data.Add(contact);
+			//context.SaveChanges();
 		}
 
 		public static void UpdateContact(Contact contact)
 		{
-			int id = contact.Id;
-			data[id] = contact;
+			data.Insert(contact.Id-1, contact);
+			//context.SaveChanges();
 		}
 
 		public static void RemoveContact(int id)
 		{
 			data.RemoveAt(id);
+			//context.SaveChanges();
 		}
 	}
 }

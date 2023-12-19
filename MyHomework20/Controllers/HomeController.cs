@@ -4,6 +4,7 @@ using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using MyHomework20.DataContext;
 using MyHomework20.Models;
 using System.Diagnostics;
+using MyHomework20.Data;
 
 namespace MyHomework20.Controllers
 {
@@ -22,14 +23,9 @@ namespace MyHomework20.Controllers
 		/// <returns></returns>
 		public IActionResult Index()
 		{
-			var contacts = new List<Contact>();
-			using (ContactDBContext db = new ContactDBContext())
-			{
-				foreach (Contact contact in db.Contacts)
-				{
-					contacts.Add(contact);
-				}
-			}
+			var data = new ContactDataApi();
+			var contacts = data.GetContacts();
+			
 			return View(contacts);
 		}
 
@@ -40,20 +36,18 @@ namespace MyHomework20.Controllers
 		/// <returns></returns>
 		public IActionResult Details(int id)
 		{
-			if (id > 0)
+			if (id >= 0)
 			{
-				using (var db = new ContactDBContext())
+				var db = new ContactDataApi();
+				try
 				{
-					try
-					{
-						var contact = db.Contacts.Find(id);
-						return View(contact);
-					}
-					catch (Exception ex)
-					{
-						Console.WriteLine(ex.Message);
-						return RedirectToAction(nameof(Error));
-					}
+					var contact = db.GetContactById(id);
+					return View(contact);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+					return RedirectToAction(nameof(Error));
 				}
 			}
 
@@ -69,7 +63,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		//[Authorize]
 		public IActionResult Create()
 		{
 			return View();
@@ -82,7 +76,7 @@ namespace MyHomework20.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize]
+		//[Authorize]
 		public IActionResult CreateNew(Contact _contact)
 		{
 			var validator = new ContactValidator();
@@ -90,19 +84,18 @@ namespace MyHomework20.Controllers
 
 			foreach (var _error in error.Errors) { Console.WriteLine($"error:{_error.ErrorCode}, message: {_error.ErrorMessage}, attempted value: {_error.AttemptedValue}"); }
 
-			using (ContactDBContext db = new ContactDBContext())
+			var api = new ContactDataApi();
+			try
 			{
-				try
-				{
-					db.Add(_contact);
-					db.SaveChanges();
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.Message);
-					return RedirectToAction("Error");
-				}
+				api.AddContact(_contact);
+				//db.SaveChanges();
 			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				return RedirectToAction("Error");
+			}
+			
 			return RedirectToAction("Index");
 		}
 
@@ -126,18 +119,16 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		[Authorize(Roles = "Administrator")]
+		//[Authorize(Roles = "Administrator")]
 		public IActionResult Edit(int id)
 		{
-			using (var db = new ContactDBContext())
+			var api = new ContactDataApi();
+			var contact = api.GetContactById(id);
+			if(contact == null)
 			{
-				var contact = db.Contacts.Find(id);
-				if(contact == null)
-				{
-					return NotFound();
-				}
-				return View(contact);
+				return NotFound();
 			}
+			return View(contact);
 		}
 
 		/// <summary>
@@ -147,30 +138,16 @@ namespace MyHomework20.Controllers
 		/// <param name="editedContact">полученные изменения</param>
 		/// <returns></returns>
 		[HttpPost("Home/EditContact/{id}")]
-		[Authorize(Roles = "Administrator")]
+		//[Authorize(Roles = "Administrator")]
 		public IActionResult EditContact (int id, [FromForm]Contact editedContact)
 		{
 			Console.Write($"--->{editedContact.Id}, {editedContact.Surname}, {editedContact.Name}, {editedContact.Midname}," +
 				$"{editedContact.Phone}, {editedContact.Address}, {editedContact.Description}.\n");
 
-			using(var db = new ContactDBContext())
-			{
-				var existingContact = db.Contacts.FirstOrDefault(c=> c.Id == id);
+			var api = new ContactDataApi();
 
-				if (existingContact == null)
-				{
-					return NotFound();
-				}
+			api.Update(editedContact);
 
-				existingContact.Surname = editedContact.Surname;
-				existingContact.Name = editedContact.Name;
-				existingContact.Midname = editedContact.Midname;
-				existingContact.Phone = editedContact.Phone;
-				existingContact.Address = editedContact.Address;
-				existingContact.Description = editedContact.Description;
-
-				db.SaveChanges();
-			}
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -180,19 +157,13 @@ namespace MyHomework20.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		//[HttpDelete]
-		[Authorize(Roles = "Administrator")]
+		//[Authorize(Roles = "Administrator")]
 		public IActionResult Delete(int id)
 		{
-			using(var db = new ContactDBContext())
-			{
-				var existingContact = db.Contacts.FirstOrDefault(c => c.Id == id);
 
-				if (existingContact != null)
-				{
-					db.Contacts.Remove(existingContact);
-					db.SaveChanges();
-				}
-			}
+			var api = new ContactDataApi();
+			api.Remove(id);
+
 			return RedirectToAction(nameof(Index));
 		}
 	}
