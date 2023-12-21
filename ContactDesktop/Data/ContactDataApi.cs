@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using ContactDesktop.Interfaces;
 using ContactDesktop.Models;
+using System;
 
 namespace ContactDesktop.Data
 {
@@ -24,6 +25,7 @@ namespace ContactDesktop.Data
 				requestUri: url,
 				content: new StringContent(JsonConvert.SerializeObject(contact), Encoding.UTF8,
 				mediaType: "application/json")).Result;
+			Console.Write(r);
 		}
 
 		public IEnumerable<Contact> GetContacts() 
@@ -40,7 +42,6 @@ namespace ContactDesktop.Data
 
 			string json = _httpClient.GetStringAsync(url).Result;
 			return JsonConvert.DeserializeObject<Contact>(json);
-
 		}
 
 		public void Update(Contact contact)
@@ -50,6 +51,7 @@ namespace ContactDesktop.Data
 
 			var r = _httpClient.PutAsync(url, new StringContent(JsonConvert.SerializeObject(contact), Encoding.UTF8,
 				mediaType: "application/json")).Result;
+			Console.Write(r);
 		}
 
 		public void Remove(int id)
@@ -57,6 +59,7 @@ namespace ContactDesktop.Data
 			string url = $@"https://localhost:7062/api/data/{id}";
 
 			var r = _httpClient.DeleteAsync(url).Result;
+			Console.Write(r);
 		}
 	}
 }
