@@ -46,7 +46,8 @@
                 Grid.Row="2"
                 Margin="5"
                 Content="Изменить"
-                FontSize="24">
+                FontSize="24"
+                Click="EditBut_OnClick">
         </Button>
 
         <Button x:Name="DeleteBut"

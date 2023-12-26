@@ -66,5 +66,11 @@ namespace ContactDesktop
 			var api = new ContactDataApi();
 			api.Remove(c.Id-1);
 		}
+
+		private void EditBut_OnClick(object sender, RoutedEventArgs e)
+		{
+			var window = new EditionWindow(ContactListBox.SelectedItem as Contact);
+			window.Show();
+		}
 	}
 }

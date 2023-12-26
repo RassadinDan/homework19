@@ -18,3 +18,5 @@ D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\ContactDesktop.exe
 D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\ContactDesktop.pdb
 D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\CreationWindow.g.cs
 D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\CreationWindow.baml
+D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\EditionWindow.g.cs
+D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\EditionWindow.baml

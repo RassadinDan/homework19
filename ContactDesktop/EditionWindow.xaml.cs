@@ -1,4 +1,5 @@
-﻿using ContactDesktop.Models;
+﻿using ContactDesktop.Data;
+using ContactDesktop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,15 +26,14 @@ namespace ContactDesktop
 		public EditionWindow(Contact contact)
 		{
 			_contact = contact;
+
+			InitializeComponent();
 			SurnameTextBox.Text = contact.Surname;
 			NameTextBox.Text = contact.Name;
 			MidnameTextBox.Text = contact.Midname;
 			PhoneTextBox.Text = contact.Phone;
 			AddressTextBox.Text = contact.Address;
 			DescriotionTextBox.Text = contact.Description;
-
-			InitializeComponent();
-
 		}
 
 		public void EditBut_OnClick(object sender, RoutedEventArgs e)
@@ -44,7 +44,8 @@ namespace ContactDesktop
 			_contact.Phone = PhoneTextBox.Text;
 			_contact.Address = AddressTextBox.Text;
 			_contact.Description = DescriotionTextBox.Text;
-
+			var api = new ContactDataApi();
+			api.Update(_contact);
 			Close();
 		}
 
