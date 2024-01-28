@@ -72,5 +72,10 @@ namespace ContactDesktop
 			var window = new EditionWindow(ContactListBox.SelectedItem as Contact);
 			window.Show();
 		}
+
+		private void AccountBut_OnClick(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

@@ -58,5 +58,12 @@
                 FontSize="24"
                 Click="DeleteBut_OnClick">
         </Button>
+        <Button x:Name="AccountBut"
+                Grid.Column="3"
+                Grid.Row="2"
+                Content="Учетная запись"
+                FontSize="24"
+                Margin="5"
+                Click="AccountBut_OnClick"></Button>
     </Grid>
 </Window>
