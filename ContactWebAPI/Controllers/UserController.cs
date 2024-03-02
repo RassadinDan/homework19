@@ -4,6 +4,8 @@ using ContactWebAPI.Models;
 
 namespace ContactWebAPI.Controllers
 {
+	[ApiController]
+	[Route("api/[controller]")]
     public class UserController : Controller
 	{
 		private readonly UserManager<User> _userManager;
@@ -15,16 +17,16 @@ namespace ContactWebAPI.Controllers
 			_signInManager = signInManager;
 		}
 
-		[HttpGet]
-		public IActionResult Login(string returnUrl)
-		{
-			return View(new UserLogin()
-			{
-				ReturnUrl = returnUrl
-			});
-		}
+		//[HttpGet]
+		//public IActionResult Login(string returnUrl)
+		//{
+		//	return View(new UserLogin()
+		//	{
+		//		ReturnUrl = returnUrl
+		//	});
+		//}
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost("login"), ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(UserLogin model)
 		{
 			if(ModelState.IsValid) 
@@ -36,26 +38,28 @@ namespace ContactWebAPI.Controllers
 
 				if (loginResult.Succeeded) 
 				{
-					if(Url.IsLocalUrl(model.ReturnUrl))
-					{
-						return Redirect(model.ReturnUrl);
-					}
+					//if(Url.IsLocalUrl(model.ReturnUrl))
+					//{
+					//	return Redirect(model.ReturnUrl);
+					//}
 
-					return RedirectToAction("Index", "Home");
+					return Ok(new { message = "Login sacceeded" });
+						//RedirectToAction("Index", "Home");
 				}
 			}
 
-			ModelState.AddModelError("", "Пользователь не найден");
-			return View(model);
+			return BadRequest(new { message = "что-то не так." });
+			//ModelState.AddModelError("", "Пользователь не найден");
+			//return View(model);
 		}
 
-		[HttpGet]
-		public IActionResult Register()
-		{
-			return View(new UserRegistration());
-		}
+		//[HttpGet]
+		//public IActionResult Register()
+		//{
+		//	return View(new UserRegistration());
+		//}
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost("register"), ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(UserRegistration model)
 		{
 			if (ModelState.IsValid) 
@@ -66,24 +70,27 @@ namespace ContactWebAPI.Controllers
 				if(createResult.Succeeded)
 				{
 					await _signInManager.SignInAsync(user, isPersistent: false);
-					return RedirectToAction("Index", "Home");
+					return Ok(new { message = "Register succeeded" });
+					//return RedirectToAction("Index", "Home");
 				}
 				else
 				{
 					foreach(var identityError in createResult.Errors) 
 					{
-						ModelState.AddModelError("", identityError.Description);
+						//ModelState.AddModelError("", identityError.Description);
+						return BadRequest(identityError.Description);
 					}
 				}
 			}
 			return View(model);
 		}
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost("logout"), ValidateAntiForgeryToken]
 		public async Task<IActionResult> Logout()
 		{
 			await _signInManager.SignOutAsync();
-			return RedirectToAction("Index", "Home");
+			return Ok(new {message = "Logout succeeded"});
+			//return RedirectToAction("Index", "Home");
 		}
 	}
 }

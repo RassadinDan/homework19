@@ -5,8 +5,8 @@ using ContactWebAPI.Data;
 
 namespace ContactWebAPI.Controllers
 {
-	[Route("api/[controller]")]
 	[ApiController]
+	[Route("api/[controller]")]
 	public class DataController : ControllerBase
 	{
 		[HttpGet]

@@ -71,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AuthWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -87,10 +91,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AuthWindow.xaml.cs">
+      <DependentUpon>AuthWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreationWindow.xaml.cs">
       <DependentUpon>CreationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\ContactDataApi.cs" />
+    <Compile Include="Data\UserDataApi.cs" />
     <Compile Include="EditionWindow.xaml.cs">
       <DependentUpon>EditionWindow.xaml</DependentUpon>
     </Compile>
