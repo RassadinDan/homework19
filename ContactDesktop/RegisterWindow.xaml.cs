@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ContactDesktop.Data;
+using ContactDesktop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,35 @@ namespace ContactDesktop
 	/// </summary>
 	public partial class RegisterWindow : Window
 	{
-		public RegisterWindow()
+		public UserRegistration _form;
+		public RegisterWindow(UserRegistration form)
 		{
 			InitializeComponent();
+			_form = form;
+		}
+
+
+		private void RegisterBut_OnClick(object sender, RoutedEventArgs e)
+		{
+			var userData = new UserDataApi();
+			if (LoginBox.Text != string.Empty && PasswdBox.Password != string.Empty && PasswdConfirmationBox.Password != string.Empty &&
+				PasswdBox.Password==PasswdConfirmationBox.Password)
+			{
+				_form.UserName = LoginBox.Text;
+				_form.Password = PasswdBox.Password;
+				_form.ConfirmPassword = PasswdConfirmationBox.Password;
+				userData.Register(_form);
+				Close();
+			}
+			else
+			{ 
+				MessageBox.Show("Все поля должны быть заполнены, пароли должны совпадать", "Warning", MessageBoxButton.OK);
+			}
+		}
+
+		private void CancelBut_OnClick(object sender, RoutedEventArgs e)
+		{
+			Close();
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContactDesktop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,20 @@ namespace ContactDesktop
 		public AuthWindow()
 		{
 			InitializeComponent();
+		}
+
+		private void RegisterBut_OnClick(object sender, RoutedEventArgs e)
+		{
+			var form = new UserRegistration();
+			var registerWindow = new RegisterWindow(form);
+			registerWindow.ShowDialog();
+		}
+
+		private void LogInBut_OnClick(object sender, RoutedEventArgs e) 
+		{
+			var form = new UserLogin();
+			var loginWindow = new LoginWindow(form);
+			loginWindow.ShowDialog();
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ContactDesktop.Data;
+using ContactDesktop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,25 @@ namespace ContactDesktop
 	/// </summary>
 	public partial class LoginWindow : Window
 	{
-		public LoginWindow()
+		public UserLogin _form;
+		public LoginWindow(UserLogin form)
 		{
 			InitializeComponent();
+			_form = form;
+		}
+
+		public void LogInBut_OnClick(object sender, RoutedEventArgs e)
+		{
+			_form.UserName = LoginBox.Text;
+			_form.Password= PasswdBox.Password;
+			var userData = new UserDataApi();
+			userData.Login(_form);
+			Close();
+		}
+
+		public void CancelBut_OnClick(object sender, RoutedEventArgs e)
+		{
+			Close();
 		}
 	}
 }

@@ -18,9 +18,9 @@ namespace ContactDesktop.Data
 			_httpClient = new HttpClient();
 		}
 
-		public void Register(string username, string password, string confpswd)
+		public void Register(UserRegistration model)
 		{
-			var model = new UserRegistration(){ UserName = username, Password = password, ConfirmPassword = confpswd };
+			//var model = new UserRegistration(){ UserName = username, Password = password, ConfirmPassword = confpswd };
 			var url = "https://localhost:7062/api/user/register";
 			var r =_httpClient.PostAsync(
 				requestUri: url,
@@ -29,9 +29,9 @@ namespace ContactDesktop.Data
 			Console.WriteLine(r);
 		}
 
-		public void Login(string username, string password)
+		public void Login(UserLogin model)
 		{
-			var model = new UserLogin() { UserName = username,Password = password };
+			//var model = new UserLogin() { UserName = username,Password = password };
 			var url = "https://localhost:7062/api/user/login";
 			var r = _httpClient.PostAsync(
 				requestUri: url,
