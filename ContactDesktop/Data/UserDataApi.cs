@@ -29,7 +29,7 @@ namespace ContactDesktop.Data
 			Console.WriteLine(r);
 		}
 
-		public void Login(UserLogin model)
+		public async Task<string> Login(UserLogin model)
 		{
 			//var model = new UserLogin() { UserName = username,Password = password };
 			var url = "https://localhost:7062/api/user/login";
@@ -37,7 +37,9 @@ namespace ContactDesktop.Data
 				requestUri: url,
 				content: new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
 				mediaType: "application/json")).Result;
-			Console.WriteLine(r);
+			var username = await r.Content.ReadAsStringAsync();
+			Console.WriteLine(username);
+			return username;
 		}
 
 		public async Task<bool> Logout() 

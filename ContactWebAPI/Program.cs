@@ -1,6 +1,8 @@
 using ContactWebAPI.DataContext;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime;
+using ContactWebAPI.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,9 @@ builder.Services.AddDbContext<ContactDBContext>(options =>
 {
 	options.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = ContactData_1;Integrated Security = true") ;
 });
+builder.Services.AddIdentity<User, IdentityRole>()
+				.AddEntityFrameworkStores<ContactDBContext>()
+				.AddDefaultTokenProviders();
 
 var app = builder.Build();
 

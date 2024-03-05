@@ -20,23 +20,31 @@ namespace ContactDesktop
 	/// </summary>
 	public partial class AuthWindow : Window
 	{
+		public UserLogin userLogin {  get; set; }
 		public AuthWindow()
 		{
 			InitializeComponent();
+			userLogin = new UserLogin();
 		}
 
 		private void RegisterBut_OnClick(object sender, RoutedEventArgs e)
 		{
 			var form = new UserRegistration();
 			var registerWindow = new RegisterWindow(form);
-			registerWindow.ShowDialog();
+			registerWindow.Show();
 		}
 
 		private void LogInBut_OnClick(object sender, RoutedEventArgs e) 
 		{
-			var form = new UserLogin();
-			var loginWindow = new LoginWindow(form);
-			loginWindow.ShowDialog();
+			var loginWindow = new LoginWindow(userLogin);
+			loginWindow.Closed +=(s, args) =>
+			{
+				Dispatcher.Invoke(() =>
+				{
+					UsernameBlock.Text = loginWindow._username;
+				});
+			};
+			loginWindow.Show();
 		}
 	}
 }

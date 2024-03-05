@@ -22,18 +22,20 @@ namespace ContactDesktop
 	public partial class LoginWindow : Window
 	{
 		public UserLogin _form;
+		public string _username {  get; set; }
 		public LoginWindow(UserLogin form)
 		{
 			InitializeComponent();
 			_form = form;
 		}
 
-		public void LogInBut_OnClick(object sender, RoutedEventArgs e)
+		public async void LogInBut_OnClick(object sender, RoutedEventArgs e)
 		{
 			_form.UserName = LoginBox.Text;
 			_form.Password= PasswdBox.Password;
 			var userData = new UserDataApi();
-			userData.Login(_form);
+			var r = await userData.Login(_form);
+			_username = r;
 			Close();
 		}
 

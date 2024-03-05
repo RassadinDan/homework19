@@ -62,7 +62,6 @@ D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\staticwebassets.pack.j
 D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\scopedcss\bundle\MyHomework20.styles.css
 D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\scopedcss\projectbundle\MyHomework20.bundle.scp.css
-D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\MyHomework20.csproj.CopyComplete
 D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\MyHomework20.dll
 D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\refint\MyHomework20.dll
 D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\MyHomework20.pdb
@@ -141,3 +140,4 @@ D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net8.0\runtimes\win\lib\net6.
 D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\Work\Homework\Homework19\MyHomework20\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\Work\Homework\Homework19\MyHomework20\obj\Debug\net8.0\MyHomewo.2C5063D8.Up2Date

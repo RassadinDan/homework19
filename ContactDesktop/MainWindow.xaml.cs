@@ -75,7 +75,8 @@ namespace ContactDesktop
 
 		private void AccountBut_OnClick(object sender, RoutedEventArgs e)
 		{
-
+			var authWindow = new AuthWindow();
+			authWindow.Show();
 		}
 	}
 }

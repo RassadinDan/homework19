@@ -26,8 +26,8 @@ namespace ContactWebAPI.Controllers
 		//	});
 		//}
 
-		[HttpPost("login"), ValidateAntiForgeryToken]
-		public async Task<IActionResult> Login(UserLogin model)
+		[HttpPost("login"),/* ValidateAntiForgeryToken*/]
+		public async Task<IActionResult> Login([FromBody]UserLogin model)
 		{
 			if(ModelState.IsValid) 
 			{
@@ -38,6 +38,12 @@ namespace ContactWebAPI.Controllers
 
 				if (loginResult.Succeeded) 
 				{
+					var user = await _userManager.FindByNameAsync(model.UserName);
+					
+					if (user != null)
+					{
+						return Ok(new { UserName = user.UserName });
+					}
 					//if(Url.IsLocalUrl(model.ReturnUrl))
 					//{
 					//	return Redirect(model.ReturnUrl);
@@ -59,8 +65,8 @@ namespace ContactWebAPI.Controllers
 		//	return View(new UserRegistration());
 		//}
 
-		[HttpPost("register"), ValidateAntiForgeryToken]
-		public async Task<IActionResult> Register(UserRegistration model)
+		[HttpPost("register"), /*ValidateAntiForgeryToken*/]
+		public async Task<IActionResult> Register([FromBody]UserRegistration model)
 		{
 			if (ModelState.IsValid) 
 			{
@@ -85,7 +91,7 @@ namespace ContactWebAPI.Controllers
 			return View(model);
 		}
 
-		[HttpPost("logout"), ValidateAntiForgeryToken]
+		[HttpPost("logout"), /*ValidateAntiForgeryToken*/]
 		public async Task<IActionResult> Logout()
 		{
 			await _signInManager.SignOutAsync();

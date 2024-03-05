@@ -30,3 +30,7 @@ D:\Work\Homework\Homework19\ContactDesktop\bin\Debug\Microsoft.AspNet.Identity.E
 D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\AuthWindow.g.cs
 D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\AuthWindow.baml
 D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\ContactD.AA734D87.Up2Date
+D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\LoginWindow.g.cs
+D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\RegisterWindow.g.cs
+D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\LoginWindow.baml
+D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\RegisterWindow.baml

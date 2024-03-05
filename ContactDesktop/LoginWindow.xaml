@@ -52,13 +52,15 @@
         Grid.Column="1"
         Margin="10"
         Content="Войти"
-        FontSize="24"></Button>
+        FontSize="24"
+        Click="LogInBut_OnClick"></Button>
 
         <Button x:Name="CancelBut"
         Grid.Row="4"
         Grid.Column="2"
         Margin="10"
         Content="Отмена"
-        FontSize="24"></Button>
+        FontSize="24"
+        Click="CancelBut_OnClick"></Button>
     </Grid>
 </Window>
