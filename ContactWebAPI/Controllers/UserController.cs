@@ -17,14 +17,6 @@ namespace ContactWebAPI.Controllers
 			_signInManager = signInManager;
 		}
 
-		//[HttpGet]
-		//public IActionResult Login(string returnUrl)
-		//{
-		//	return View(new UserLogin()
-		//	{
-		//		ReturnUrl = returnUrl
-		//	});
-		//}
 
 		[HttpPost("login"),/* ValidateAntiForgeryToken*/]
 		public async Task<IActionResult> Login([FromBody]UserLogin model)
@@ -42,15 +34,10 @@ namespace ContactWebAPI.Controllers
 					
 					if (user != null)
 					{
-						return Ok(new { UserName = user.UserName });
+						return Ok(new { user.UserName });
 					}
-					//if(Url.IsLocalUrl(model.ReturnUrl))
-					//{
-					//	return Redirect(model.ReturnUrl);
-					//}
 
 					return Ok(new { message = "Login sacceeded" });
-						//RedirectToAction("Index", "Home");
 				}
 			}
 
