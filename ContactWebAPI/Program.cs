@@ -3,36 +3,28 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime;
 using ContactWebAPI.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore;
 
-var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ContactDBContext>(options =>
+namespace ContactWebAPI
 {
-	options.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = ContactData_1;Integrated Security = true") ;
-});
-builder.Services.AddIdentity<User, IdentityRole>()
-				.AddEntityFrameworkStores<ContactDBContext>()
-				.AddDefaultTokenProviders();
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			var init = BuildWebHost(args);
+			init.Run();
+		}
 
-var app = builder.Build();
+		public static IWebHost BuildWebHost(string[] args)=>
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-	app.UseSwagger();
-	app.UseSwaggerUI();
+			WebHost.CreateDefaultBuilder(args)
+			.UseStartup<Startup>()
+			.ConfigureLogging(log => log.AddConsole())
+			.Build();
+		
+	}
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

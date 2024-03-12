@@ -20,11 +20,18 @@ namespace ContactDesktop
 	/// </summary>
 	public partial class AuthWindow : Window
 	{
-		public UserLogin userLogin {  get; set; }
+		//public UserLogin userLogin {  get; set; }
 		public AuthWindow()
 		{
 			InitializeComponent();
-			userLogin = new UserLogin();
+			if(Session.UserName == string.Empty)
+			{
+				UsernameBlock.Text = string.Empty;
+			}
+			else
+			{
+				UsernameBlock.Text = Session.UserName;
+			}
 		}
 
 		private void RegisterBut_OnClick(object sender, RoutedEventArgs e)
@@ -36,7 +43,7 @@ namespace ContactDesktop
 
 		private void LogInBut_OnClick(object sender, RoutedEventArgs e) 
 		{
-			var loginWindow = new LoginWindow(userLogin);
+			var loginWindow = new LoginWindow();
 			loginWindow.Closed +=(s, args) =>
 			{
 				Dispatcher.Invoke(() =>

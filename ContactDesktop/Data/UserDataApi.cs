@@ -15,7 +15,9 @@ namespace ContactDesktop.Data
 
 		public UserDataApi()
 		{
-			_httpClient = new HttpClient();
+			var handler = new HttpClientHandler();
+			handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+			_httpClient = new HttpClient(handler);
 		}
 
 		public void Register(UserRegistration model)
@@ -29,17 +31,30 @@ namespace ContactDesktop.Data
 			Console.WriteLine(r);
 		}
 
-		public async Task<string> Login(UserLogin model)
+		public async Task<bool> Login(UserLogin model)
 		{
 			//var model = new UserLogin() { UserName = username,Password = password };
 			var url = "https://localhost:7062/api/user/login";
-			var r = _httpClient.PostAsync(
-				requestUri: url,
-				content: new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
-				mediaType: "application/json")).Result;
-			var username = await r.Content.ReadAsStringAsync();
-			Console.WriteLine(username);
-			return username;
+
+			try { 
+
+				var r = _httpClient.PostAsync(
+					requestUri: url,
+					content: new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
+					mediaType: "application/json")).Result;
+				var responseContent = await r.Content.ReadAsStringAsync();
+				var loginResponse = JsonConvert.DeserializeObject<LoginResponse>(responseContent);
+
+				Session.UserName = model.UserName;
+				Session.AuthToken = loginResponse.Token;
+				Console.WriteLine($"{Session.UserName}, {Session.AuthToken}");
+				return true; 
+			}
+			catch(HttpRequestException ex)
+			{
+				Console.WriteLine($"Ошибка при запросе к API: {ex.Message}");
+			}
+			return false;
 		}
 
 		public async Task<bool> Logout() 
@@ -49,6 +64,7 @@ namespace ContactDesktop.Data
 
 			if(r.IsSuccessStatusCode) 
 			{
+				Session.ClearSession();
 				return true;
 			}
 			else
@@ -57,5 +73,10 @@ namespace ContactDesktop.Data
 				return false;
 			}
 		}
+	}
+
+	public class LoginResponse
+	{
+		public string Token { get; set; }
 	}
 }

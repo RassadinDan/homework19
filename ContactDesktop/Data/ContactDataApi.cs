@@ -14,7 +14,9 @@ namespace ContactDesktop.Data
 
 		public ContactDataApi()
 		{
-			_httpClient = new HttpClient();
+			var handler = new HttpClientHandler();
+			handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+			_httpClient = new HttpClient(handler);
 		}
 
 		public void AddContact(Contact contact)

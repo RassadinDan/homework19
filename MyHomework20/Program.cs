@@ -13,14 +13,6 @@ namespace MyHomework20
 		public static void Main(string[] args)
 		{
 			var init = BuildWebHost(args);
-
-			//using (var scope = init.Services.CreateScope())
-			//{
-			//	var s = scope.ServiceProvider;
-			//	var c = s.GetRequiredService<ContactDBContext>();
-			//	DbInitializer.Initialize(c);
-			//}
-
 			init.Run();
 		}
 
