@@ -4,8 +4,8 @@ using ContactWebAPI.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
-//using Microsoft.IdentityModel.JsonWebTokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Diagnostics.Eventing.Reader;
 
 namespace ContactWebAPI.Controllers
 {
@@ -15,12 +15,14 @@ namespace ContactWebAPI.Controllers
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly SignInManager<User> _signInManager;
+		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly IConfiguration _config;
 
-		public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+		public UserController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
+			_roleManager = roleManager;
 			_config = configuration;
 		}
 
@@ -50,15 +52,58 @@ namespace ContactWebAPI.Controllers
 			}
 			
 			return BadRequest(new { message = "что-то не так." });
-			//ModelState.AddModelError("", "Пользователь не найден");
-			//return View(model);
 		}
 
-		//[HttpGet]
-		//public IActionResult Register()
-		//{
-		//	return View(new UserRegistration());
-		//}
+		[HttpPost("loginforweb"),/* ValidateAntiForgeryToken*/]
+		public async Task<IActionResult> LoginForWeb([FromBody] UserLogin model)
+		{
+			var user = await _userManager.FindByNameAsync(model.UserName);
+			if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+			{
+				var roles = await _userManager.GetRolesAsync(user);
+
+				var claims = new List<Claim>
+				{
+					new Claim(ClaimTypes.Name, user.UserName),
+					new Claim(ClaimTypes.NameIdentifier, user.Id),
+				};
+
+				foreach (var userRole in roles)
+				{
+					claims.Add(new Claim(ClaimTypes.Role, userRole));
+				}
+
+				var tokenHandler = new JwtSecurityTokenHandler();
+				var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+				var tokenDescriptor = new SecurityTokenDescriptor
+				{
+					Subject = new ClaimsIdentity(claims),
+					Expires = DateTime.UtcNow.AddDays(7),
+					SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+				};
+				var token = tokenHandler.CreateToken(tokenDescriptor);
+				return Ok(new { Token = tokenHandler.WriteToken(token) });
+			}
+
+			return Unauthorized();
+			//if (ModelState.IsValid)
+			//{
+			//	var loginResult = await _signInManager.PasswordSignInAsync(model.UserName,
+			//		model.Password,
+			//		false,
+			//		lockoutOnFailure: false);
+
+			//	if (loginResult.Succeeded)
+			//	{
+			//		var user = await _userManager.FindByNameAsync(model.UserName);
+			//		var role = await _userManager.GetRolesAsync(user);
+			//		return Ok(new { message="login successfull" /*user, role */});
+			//	}
+			//}
+
+			//return BadRequest(new { message = "что-то не так." });
+		}
+
 
 		[HttpPost("register"), /*ValidateAntiForgeryToken*/]
 		public async Task<IActionResult> Register([FromBody]UserRegistration model)
@@ -72,13 +117,11 @@ namespace ContactWebAPI.Controllers
 				{
 					await _signInManager.SignInAsync(user, isPersistent: false);
 					return Ok(new { message = "Register succeeded" });
-					//return RedirectToAction("Index", "Home");
 				}
 				else
 				{
 					foreach(var identityError in createResult.Errors) 
 					{
-						//ModelState.AddModelError("", identityError.Description);
 						return BadRequest(identityError.Description);
 					}
 				}
@@ -95,7 +138,6 @@ namespace ContactWebAPI.Controllers
 		{
 			await _signInManager.SignOutAsync();
 			return Ok(new {message = "Logout succeeded"});
-			//return RedirectToAction("Index", "Home");
 		}
 
 		/// <summary>

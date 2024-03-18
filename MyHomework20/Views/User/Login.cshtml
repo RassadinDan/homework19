@@ -11,7 +11,7 @@
 		
 	</head>
 	<body>
-	@using (Html.BeginForm("Login", "User"))
+	@using (Html.BeginForm("Login", "User", FormMethod.Post))
 	{
 		<div class="form-group">
 			@Html.LabelFor(model => model.UserName)

@@ -21,6 +21,7 @@ namespace MyHomework20.Controllers
 		/// Основная страница с выводом контактов.
 		/// </summary>
 		/// <returns></returns>
+		[AllowAnonymous]
 		public IActionResult Index()
 		{
 			var data = new ContactDataApi();
@@ -34,6 +35,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
+		//[Authorize(Roles = "User")]
 		public IActionResult Details(int id)
 		{
 			if (id >= 0)
@@ -63,7 +65,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		//[Authorize]
+		//[Authorize(Roles = "User")]
 		public IActionResult Create()
 		{
 			return View();
@@ -76,7 +78,7 @@ namespace MyHomework20.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		//[Authorize]
+		//[Authorize(Roles = "User")]
 		public IActionResult CreateNew(Contact _contact)
 		{
 			var validator = new ContactValidator();
@@ -88,7 +90,6 @@ namespace MyHomework20.Controllers
 			try
 			{
 				api.AddContact(_contact);
-				//db.SaveChanges();
 			}
 			catch (Exception ex)
 			{

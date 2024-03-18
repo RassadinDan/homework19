@@ -134,6 +134,22 @@
   },
   {
     "ContainingType": "ContactWebAPI.Controllers.UserController",
+    "Method": "LoginForWeb",
+    "RelativePath": "api/User/loginforweb",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ContactWebAPI.Models.UserLogin",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ContactWebAPI.Controllers.UserController",
     "Method": "Logout",
     "RelativePath": "api/User/logout",
     "HttpMethod": "POST",

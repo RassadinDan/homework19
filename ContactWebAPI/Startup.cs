@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ContactWebAPI.Services;
 
 namespace ContactWebAPI
 {
@@ -21,7 +22,6 @@ namespace ContactWebAPI
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			//services.AddMvc();
 			services.AddControllers();
 			services.AddEndpointsApiExplorer();
 			services.AddSwaggerGen(options =>
@@ -37,11 +37,15 @@ namespace ContactWebAPI
 			{
 				options.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = ContactData_1;Integrated Security = true");
 			});
-			services.AddIdentity<User, IdentityRole>()
+			services.AddIdentityCore<User>()
 				.AddEntityFrameworkStores<ContactDBContext>()
 				.AddDefaultTokenProviders();
 
-			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+			services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
 				.AddJwtBearer(options =>
 				{
 					options.TokenValidationParameters = new TokenValidationParameters
@@ -50,15 +54,16 @@ namespace ContactWebAPI
 						ValidateAudience = true,
 						ValidateLifetime = true,
 						ValidateIssuerSigningKey = true,
-						ValidIssuer = "https://localhost",
+						ValidIssuer = "https://localhost:7062/",
 						ValidAudience = "client_app",
 						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("TheMostSecretKeyInTheWorldAndWholeUniverse"))
 					};
 				});
+			services.AddHostedService<RolesInitializerService>();
 		}
+
 		public void Configure(IApplicationBuilder app)
 		{
-			// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 			app.UseSwagger();
 			app.UseSwaggerUI(options =>
 			{
@@ -67,7 +72,10 @@ namespace ContactWebAPI
 			});
 			app.UseRouting();
 			app.UseHttpsRedirection();
+
+			app.UseAuthentication();
 			app.UseAuthorization();
+
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();

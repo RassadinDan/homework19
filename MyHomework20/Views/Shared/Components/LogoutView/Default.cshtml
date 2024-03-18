@@ -1,7 +1,7 @@
-﻿@if (User.Identity.IsAuthenticated)
+﻿@if (AuthSession.IsAuthenticated == true)
 {
 	<div class="btn-group pull-right">
-		<a class="navbar-brand" href="#">@User.Identity.Name</a>
+		<a class="navbar-brand" href="#">@AuthSession.User.UserName</a>
 		<form method="post" asp-controller="User" asp-action="Logout" id="logoutform" asp-antiforgery="true">
 			<a class="navbar-brand" href="#" onclick = "document.getElementById('logoutform').submit()">Выход</a>
 		</form>

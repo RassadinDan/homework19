@@ -22,7 +22,6 @@ namespace ContactDesktop.Data
 
 		public void Register(UserRegistration model)
 		{
-			//var model = new UserRegistration(){ UserName = username, Password = password, ConfirmPassword = confpswd };
 			var url = "https://localhost:7062/api/user/register";
 			var r =_httpClient.PostAsync(
 				requestUri: url,
@@ -33,7 +32,6 @@ namespace ContactDesktop.Data
 
 		public async Task<bool> Login(UserLogin model)
 		{
-			//var model = new UserLogin() { UserName = username,Password = password };
 			var url = "https://localhost:7062/api/user/login";
 
 			try { 
@@ -57,12 +55,12 @@ namespace ContactDesktop.Data
 			return false;
 		}
 
-		public async Task<bool> Logout() 
+		public async Task<bool> Logout()
 		{
 			var url = "https://localhost:7062/api/user/logout";
 			var r = await _httpClient.PostAsync(url, null);
 
-			if(r.IsSuccessStatusCode) 
+			if(r.IsSuccessStatusCode)
 			{
 				Session.ClearSession();
 				return true;

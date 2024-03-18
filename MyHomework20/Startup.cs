@@ -50,14 +50,29 @@ namespace MyHomework20
 
 			services.AddDbContext<ContactDBContext>(options => options.UseSqlServer(
 				Configuration.GetConnectionString("DefaultConnection")));
+
+			services.AddHttpClient<AuthService>("UnsafeSSLClient", client =>
+			{
+
+			}).ConfigurePrimaryHttpMessageHandler(() =>
+			{
+				return new HttpClientHandler
+				{
+					ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicy) => true
+				};
+			});
+
+			services.AddSession();
+			services.AddControllersWithViews();
 		}
 
-		public void Configure(IApplicationBuilder app)
+		public void Configure(IApplicationBuilder app, RoleManager<IdentityRole> roleManager)
 		{
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
 			app.UseRouting();
+			app.UseSession();
 
 			app.UseAuthentication();
 
@@ -70,6 +85,19 @@ namespace MyHomework20
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
 
+			InitializeRoles(roleManager).Wait();
+		}
+
+		private async Task InitializeRoles(RoleManager<IdentityRole> roleManager)
+		{
+			if(!await roleManager.RoleExistsAsync("Administrator"))
+			{
+				await roleManager.CreateAsync(new IdentityRole("Administrator"));
+			}
+			if(!await roleManager.RoleExistsAsync("User"))
+			{
+				await roleManager.CreateAsync(new IdentityRole("User"));
+			}
 		}
 	}
 }

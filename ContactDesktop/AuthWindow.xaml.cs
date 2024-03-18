@@ -20,7 +20,6 @@ namespace ContactDesktop
 	/// </summary>
 	public partial class AuthWindow : Window
 	{
-		//public UserLogin userLogin {  get; set; }
 		public AuthWindow()
 		{
 			InitializeComponent();
@@ -48,7 +47,7 @@ namespace ContactDesktop
 			{
 				Dispatcher.Invoke(() =>
 				{
-					UsernameBlock.Text = loginWindow._username;
+					UsernameBlock.Text = Session.UserName;
 				});
 			};
 			loginWindow.Show();

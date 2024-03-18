@@ -6,47 +6,39 @@ namespace MyHomework20.Controllers
 {
     public class UserController : Controller
 	{
-		private readonly UserManager<User> _userManager;
-		private readonly SignInManager<User> _signInManager;
+		private readonly AuthService _authService;
 
-		public UserController(UserManager<User> userManager, SignInManager<User> signInManager)
+		public UserController(AuthService authService)
 		{
-			_userManager = userManager;
-			_signInManager = signInManager;
+			_authService = authService;
 		}
 
 		[HttpGet]
-		public IActionResult Login(string returnUrl)
+		public IActionResult Login(/*string returnUrl*/)
 		{
+			var returnUrl = "https://localhost:7062/Home/";	
 			return View(new UserLogin()
 			{
 				ReturnUrl = returnUrl
 			});
 		}
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost, /*ValidateAntiForgeryToken*/]
 		public async Task<IActionResult> Login(UserLogin model)
 		{
-			if(ModelState.IsValid) 
+			var token = await _authService.LoginAsync(model);
+			if (token != null)
 			{
-				var loginResult = await _signInManager.PasswordSignInAsync(model.UserName,
-					model.Password,
-					false,
-					lockoutOnFailure: false);
-
-				if (loginResult.Succeeded) 
-				{
-					if(Url.IsLocalUrl(model.ReturnUrl))
-					{
-						return Redirect(model.ReturnUrl);
-					}
-
-					return RedirectToAction("Index", "Home");
-				}
+				AuthSession.IsAuthenticated = true;
+				AuthSession.User = new User { UserName = model.UserName };
+				AuthSession.Token = token;
+				return RedirectToAction("Index", "Home");
 			}
-
-			ModelState.AddModelError("", "Пользователь не найден");
-			return View(model);
+			else
+			{
+				ViewBag.ErrorMessage = "Неверное имя пользователя или пароль";
+				return View();
+			}
 		}
 
 		[HttpGet]
@@ -55,34 +47,31 @@ namespace MyHomework20.Controllers
 			return View(new UserRegistration());
 		}
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost, /*ValidateAntiForgeryToken*/]
 		public async Task<IActionResult> Register(UserRegistration model)
 		{
 			if (ModelState.IsValid) 
 			{
-				var user = new User { UserName = model.UserName };
-				var createResult = await _userManager.CreateAsync(user, model.Password);
+				var createResult = await _authService.RegisterAsync(model);
 
-				if(createResult.Succeeded)
+				if(createResult == true)
 				{
-					await _signInManager.SignInAsync(user, isPersistent: false);
+					var login = new UserLogin() { UserName = model.UserName, Password = model.Password };
+					await _authService.LoginAsync(login);
 					return RedirectToAction("Index", "Home");
 				}
 				else
 				{
-					foreach(var identityError in createResult.Errors) 
-					{
-						ModelState.AddModelError("", identityError.Description);
-					}
+					return RedirectToAction("Error", "Home");
 				}
 			}
 			return View(model);
 		}
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost, /*ValidateAntiForgeryToken*/]
 		public async Task<IActionResult> Logout()
 		{
-			await _signInManager.SignOutAsync();
+			await _authService.LogoutAsync();
 			return RedirectToAction("Index", "Home");
 		}
 	}
