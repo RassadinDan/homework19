@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,13 +40,15 @@ namespace MyHomework20
 				options.Lockout.AllowedForNewUsers = true;
 			});
 
-			services.ConfigureApplicationCookie(options =>
+			services.AddAuthentication(options =>
 			{
-				options.Cookie.HttpOnly = true;
+				options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+			})
+			.AddCookie(options =>
+			{
 				options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
 				options.LoginPath = "/User/Login";
 				options.LogoutPath = "/User/Logout";
-				options.SlidingExpiration = true;
 			});
 
 			services.AddDbContext<ContactDBContext>(options => options.UseSqlServer(

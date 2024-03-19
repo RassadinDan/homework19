@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ContactWebAPI.Services;
+using Microsoft.Extensions.Configuration;
+using ContactWebAPI.Data;
 
 namespace ContactWebAPI
 {
@@ -35,9 +37,10 @@ namespace ContactWebAPI
 			});
 			services.AddDbContext<ContactDBContext>(options =>
 			{
-				options.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = ContactData_1;Integrated Security = true");
+				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 			});
-			services.AddIdentityCore<User>()
+			services.AddScoped<Repository>();
+			services.AddIdentity<User, IdentityRole>()
 				.AddEntityFrameworkStores<ContactDBContext>()
 				.AddDefaultTokenProviders();
 
@@ -54,9 +57,9 @@ namespace ContactWebAPI
 						ValidateAudience = true,
 						ValidateLifetime = true,
 						ValidateIssuerSigningKey = true,
-						ValidIssuer = "https://localhost:7062/",
-						ValidAudience = "client_app",
-						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("TheMostSecretKeyInTheWorldAndWholeUniverse"))
+						ValidIssuer = Configuration["JwtSettings:Issuer"],
+						ValidAudience = Configuration["JstSettings:Audience"],
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSettings:SecretKey"]))
 					};
 				});
 			services.AddHostedService<RolesInitializerService>();

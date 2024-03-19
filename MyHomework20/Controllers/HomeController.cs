@@ -21,7 +21,7 @@ namespace MyHomework20.Controllers
 		/// Основная страница с выводом контактов.
 		/// </summary>
 		/// <returns></returns>
-		[AllowAnonymous]
+
 		public IActionResult Index()
 		{
 			var data = new ContactDataApi();
@@ -35,7 +35,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		//[Authorize(Roles = "User")]
+
 		public IActionResult Details(int id)
 		{
 			if (id >= 0)
@@ -65,7 +65,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		//[Authorize(Roles = "User")]
+
 		public IActionResult Create()
 		{
 			return View();
@@ -78,7 +78,7 @@ namespace MyHomework20.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		//[Authorize(Roles = "User")]
+
 		public IActionResult CreateNew(Contact _contact)
 		{
 			var validator = new ContactValidator();
@@ -120,7 +120,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		//[Authorize(Roles = "Administrator")]
+
 		public IActionResult Edit(int id)
 		{
 			var api = new ContactDataApi();
@@ -139,7 +139,7 @@ namespace MyHomework20.Controllers
 		/// <param name="editedContact">полученные изменения</param>
 		/// <returns></returns>
 		[HttpPost("Home/EditContact/{id}")]
-		//[Authorize(Roles = "Administrator")]
+
 		public IActionResult EditContact (int id, [FromForm]Contact editedContact)
 		{
 			Console.Write($"--->{editedContact.Id}, {editedContact.Surname}, {editedContact.Name}, {editedContact.Midname}," +
@@ -157,8 +157,7 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		//[HttpDelete]
-		//[Authorize(Roles = "Administrator")]
+
 		public IActionResult Delete(int id)
 		{
 

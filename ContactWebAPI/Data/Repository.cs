@@ -4,67 +4,46 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ContactWebAPI.Data
 {
-	public static class Repository
+	public class Repository
 	{
-		static List<Contact> data;
+		private readonly ContactDBContext _context;
 
-		static readonly ContactDBContext context;
-		static Repository()
+		public Repository(ContactDBContext context)
 		{
-			context = new ContactDBContext();
-			data = context.Contacts.ToList<Contact>();
+			_context = context;
 		}
 
-		public static IEnumerable<Contact> GetAll() => data;
-
-		public static Contact GetById(int id)
+		public async Task<IEnumerable<Contact>> GetAllAsync()
 		{
-			return data.Find(contact => contact.Id == id);
+			return await _context.Contacts.ToListAsync();
 		}
 
-		public static void AddContact(Contact contact) 
+		public async Task<Contact> GetByIdAsync(int id)
 		{
-			contact.Id = data.Count+1;
-			data.Add(contact);
-			context.SaveChanges();
-			//Save();
+			return await _context.Contacts.FindAsync(id);
 		}
 
-		public static void UpdateContact(Contact contact)
+		public async Task AddContactAsync(Contact contact)
 		{
-			data[contact.Id-1] = contact;
-			context.SaveChanges();
-			//Save();
+			_context.Contacts.Add(contact);
+			await _context.SaveChangesAsync();
 		}
 
-		public static void RemoveContact(int id)
+		public async Task UpdateContactAsync(Contact contact)
 		{
-			data.RemoveAt(id);
-			context.SaveChanges();
-			//Save();
+			_context.Contacts.Update(contact);
+			await _context.SaveChangesAsync();
 		}
 
-		public static void Save()
+		public async Task RemoveContactAsync(int id)
 		{
-			foreach(Contact contact in data)
+			var contact = await _context.Contacts.FindAsync(id);
+			if (contact != null)
 			{
-				if(context.Contacts.Contains(contact)) 
-				{
-					context.Contacts.Update(contact);
-				}
-				else 
-				{
-					context.Contacts.Add(contact); 
-				}
-			}
-
-			using(var trans = context.Database.BeginTransaction())
-			{
-				context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Contacts] ON");
-				context.SaveChanges();
-				context.Database.ExecuteSql($"SET IDENTITY_INSERT [dbo].[Contacts] OFF");
-				trans.Commit();
+				_context.Contacts.Remove(contact);
+				await _context.SaveChangesAsync();
 			}
 		}
 	}
+
 }

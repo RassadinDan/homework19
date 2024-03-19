@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ContactWebAPI.Models;
 using ContactWebAPI.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContactWebAPI.Controllers
 {
@@ -10,36 +11,84 @@ namespace ContactWebAPI.Controllers
 	[Route("api/[controller]")]
 	public class DataController : ControllerBase
 	{
-		[HttpGet("getcontacts")]
-		public IEnumerable<Contact> Get()
+		private readonly Repository _repository;
+		public DataController(Repository repository)
 		{
-			return Repository.GetAll();
+			_repository = repository;
 		}
-		[HttpGet("getone/{id}")]
-		public Contact GetOne(int id) 
+
+		[HttpGet("getcontacts")]
+		public async Task<ActionResult<IEnumerable<Contact>>> Get()
 		{
-			return Repository.GetById(id);
+			var contacts = await _repository.GetAllAsync();
+			return Ok(contacts);
+		}
+
+		[HttpGet("getone/{id}")]
+		public async Task<ActionResult<Contact>> GetOne(int id) 
+		{
+			var contact = await _repository.GetByIdAsync(id);
+			if(contact == null)
+			{
+				return NotFound();
+			}
+			return Ok(contact);
 		}
 
 		[HttpPost("addcontact")]
 		[Authorize(Roles = "User")]
-		public void Post([FromBody] Contact contact)
+		public async Task<IActionResult> Post([FromBody] Contact contact)
 		{
-			Repository.AddContact(contact);
+			await _repository.AddContactAsync(contact);
+			return Ok();
 		}
 
 		[HttpPut("updatecontact/{id}")]
 		[Authorize(Roles = "Administrator")]
-		public void Put([FromBody] Contact contact) 
+		public async Task<IActionResult> Put(int id, [FromBody] Contact contact) 
 		{
-			Repository.UpdateContact(contact);
+			if (id != contact.Id)
+			{
+				return BadRequest();
+			}
+
+			try
+			{
+				await _repository.UpdateContactAsync(contact);
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!await ContactExists(contact.Id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
+
+			return NoContent();
 		}
 
 		[HttpDelete("removecontact/{id}")]
 		[Authorize(Roles = "Administrator")]
-		public void Delete(int id) 
+		public async Task<IActionResult> Delete(int id) 
 		{
-			Repository.RemoveContact(id);
+			var contact = await _repository.GetByIdAsync(id);
+			if (contact == null)
+			{
+				return NotFound();
+			}
+
+			await _repository.RemoveContactAsync(id);
+			return NoContent();
+		}
+
+		private async Task<bool> ContactExists(int id)
+		{
+			var contact = await _repository.GetByIdAsync(id);
+			return contact != null;
 		}
 	}
 }

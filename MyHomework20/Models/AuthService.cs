@@ -42,7 +42,6 @@ namespace MyHomework20.Models
 			if(r.IsSuccessStatusCode==true)
 			{
 				var authData = await r.Content.ReadFromJsonAsync<AuthResult>();
-				//authData.IsSuccessStatusCode = true;
 				return authData.Token;
 			}
 			return null;

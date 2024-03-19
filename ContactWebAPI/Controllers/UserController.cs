@@ -15,19 +15,17 @@ namespace ContactWebAPI.Controllers
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly SignInManager<User> _signInManager;
-		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly IConfiguration _config;
 
-		public UserController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+		public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
-			_roleManager = roleManager;
 			_config = configuration;
 		}
 
 
-		[HttpPost("login"),/* ValidateAntiForgeryToken*/]
+		[HttpPost("login")]
 		public async Task<IActionResult> Login([FromBody]UserLogin model)
 		{
 			if(ModelState.IsValid) 
@@ -54,7 +52,7 @@ namespace ContactWebAPI.Controllers
 			return BadRequest(new { message = "что-то не так." });
 		}
 
-		[HttpPost("loginforweb"),/* ValidateAntiForgeryToken*/]
+		[HttpPost("loginforweb")]
 		public async Task<IActionResult> LoginForWeb([FromBody] UserLogin model)
 		{
 			var user = await _userManager.FindByNameAsync(model.UserName);
@@ -74,7 +72,7 @@ namespace ContactWebAPI.Controllers
 				}
 
 				var tokenHandler = new JwtSecurityTokenHandler();
-				var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+				var key = Encoding.UTF8.GetBytes(_config["JwtSettings:SecretKey"]);
 				var tokenDescriptor = new SecurityTokenDescriptor
 				{
 					Subject = new ClaimsIdentity(claims),
@@ -86,26 +84,10 @@ namespace ContactWebAPI.Controllers
 			}
 
 			return Unauthorized();
-			//if (ModelState.IsValid)
-			//{
-			//	var loginResult = await _signInManager.PasswordSignInAsync(model.UserName,
-			//		model.Password,
-			//		false,
-			//		lockoutOnFailure: false);
-
-			//	if (loginResult.Succeeded)
-			//	{
-			//		var user = await _userManager.FindByNameAsync(model.UserName);
-			//		var role = await _userManager.GetRolesAsync(user);
-			//		return Ok(new { message="login successfull" /*user, role */});
-			//	}
-			//}
-
-			//return BadRequest(new { message = "что-то не так." });
 		}
 
 
-		[HttpPost("register"), /*ValidateAntiForgeryToken*/]
+		[HttpPost("register")]
 		public async Task<IActionResult> Register([FromBody]UserRegistration model)
 		{
 			if (ModelState.IsValid) 
@@ -133,7 +115,7 @@ namespace ContactWebAPI.Controllers
 		/// Завершение сессии.
 		/// </summary>
 		/// <returns></returns>
-		[HttpPost("logout"), /*ValidateAntiForgeryToken*/]
+		[HttpPost("logout")]
 		public async Task<IActionResult> Logout()
 		{
 			await _signInManager.SignOutAsync();
@@ -147,7 +129,7 @@ namespace ContactWebAPI.Controllers
 		/// <returns></returns>
 		private string GenerateJwtToken(IdentityUser user)
 		{
-			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:SecretKey"]));
 			var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 			var claims = new[]
