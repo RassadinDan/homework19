@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using MyHomework20.Models;
+﻿using MyHomework20.Models;
+using ModelLibrary.Auth;
 
 namespace MyHomework20
 {

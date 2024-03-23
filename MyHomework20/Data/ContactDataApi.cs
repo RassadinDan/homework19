@@ -47,7 +47,6 @@ namespace MyHomework20.Data
 
 			string json = _httpClient.GetStringAsync(url).Result;
 			return JsonConvert.DeserializeObject<Contact>(json);
-
 		}
 
 		public void Update(Contact contact)

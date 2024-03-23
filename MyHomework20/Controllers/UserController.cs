@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ModelLibrary.Auth.Dto;
 using MyHomework20.Models;
 
 namespace MyHomework20.Controllers
@@ -14,24 +15,20 @@ namespace MyHomework20.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Login(/*string returnUrl*/)
+		public IActionResult Login()
 		{
-			var returnUrl = "https://localhost:7062/Home/";	
-			return View(new UserLogin()
-			{
-				ReturnUrl = returnUrl
-			});
+			return View(new LoginRequest());
 		}
 
-		[HttpPost, /*ValidateAntiForgeryToken*/]
-		public async Task<IActionResult> Login(UserLogin model)
+		[HttpPost, ValidateAntiForgeryToken]
+		public async Task<IActionResult> Login(LoginRequest model)
 		{
-			var token = await _authService.LoginAsync(model);
-			if (token != null)
+			var response = await _authService.LoginAsync(model);
+			if (response != null)
 			{
 				AuthSession.IsAuthenticated = true;
-				AuthSession.User = new User { UserName = model.UserName };
-				AuthSession.Token = token;
+				AuthSession.User = response.User;
+				AuthSession.Token = response.Token;
 				return RedirectToAction("Index", "Home");
 			}
 			else
@@ -44,11 +41,11 @@ namespace MyHomework20.Controllers
 		[HttpGet]
 		public IActionResult Register()
 		{
-			return View(new UserRegistration());
+			return View(new RegistrationRequest());
 		}
 
-		[HttpPost, /*ValidateAntiForgeryToken*/]
-		public async Task<IActionResult> Register(UserRegistration model)
+		[HttpPost, ValidateAntiForgeryToken]
+		public async Task<IActionResult> Register(RegistrationRequest model)
 		{
 			if (ModelState.IsValid) 
 			{
@@ -56,7 +53,7 @@ namespace MyHomework20.Controllers
 
 				if(createResult == true)
 				{
-					var login = new UserLogin() { UserName = model.UserName, Password = model.Password };
+					var login = new LoginRequest() { UserName = model.UserName, Password = model.Password };
 					await _authService.LoginAsync(login);
 					return RedirectToAction("Index", "Home");
 				}
@@ -68,7 +65,7 @@ namespace MyHomework20.Controllers
 			return View(model);
 		}
 
-		[HttpPost, /*ValidateAntiForgeryToken*/]
+		[HttpPost, ValidateAntiForgeryToken]
 		public async Task<IActionResult> Logout()
 		{
 			await _authService.LogoutAsync();

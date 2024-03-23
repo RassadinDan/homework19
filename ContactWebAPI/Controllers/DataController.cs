@@ -36,7 +36,7 @@ namespace ContactWebAPI.Controllers
 		}
 
 		[HttpPost("addcontact")]
-		[Authorize(Roles = "User")]
+		[Authorize]
 		public async Task<IActionResult> Post([FromBody] Contact contact)
 		{
 			await _repository.AddContactAsync(contact);
@@ -44,7 +44,7 @@ namespace ContactWebAPI.Controllers
 		}
 
 		[HttpPut("updatecontact/{id}")]
-		[Authorize(Roles = "Administrator")]
+		[Authorize(Policy = "RequireAdministratorRole")]
 		public async Task<IActionResult> Put(int id, [FromBody] Contact contact) 
 		{
 			if (id != contact.Id)
@@ -72,7 +72,7 @@ namespace ContactWebAPI.Controllers
 		}
 
 		[HttpDelete("removecontact/{id}")]
-		[Authorize(Roles = "Administrator")]
+		[Authorize(Policy = "RequireAdministratorRole")]
 		public async Task<IActionResult> Delete(int id) 
 		{
 			var contact = await _repository.GetByIdAsync(id);

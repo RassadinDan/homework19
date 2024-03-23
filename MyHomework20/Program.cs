@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using MyHomework20.Data;
-using MyHomework20.DataContext;
 
 namespace MyHomework20
 {

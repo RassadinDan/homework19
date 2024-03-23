@@ -1,7 +1,8 @@
 ﻿@using MyHomework20.Models;
 @using MyHomework20.Views;
+@using ModelLibrary.Auth.Dto;
 
-@model UserLogin
+@model LoginRequest
 @{
 	ViewData["Title"] = "Вход";
 	Layout = "_Layout";
@@ -21,7 +22,6 @@
 			@Html.LabelFor(model => model.Password)
 			@Html.TextBoxFor(model => model.Password, new{@class = "form-control"})
 		</div>
-		@Html.HiddenFor(model => model.ReturnUrl)
 		<button type="submit" class="btn btn-primary">Войти</button>
 	}
 	</body>

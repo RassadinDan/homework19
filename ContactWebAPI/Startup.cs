@@ -10,6 +10,7 @@ using System.Text;
 using ContactWebAPI.Services;
 using Microsoft.Extensions.Configuration;
 using ContactWebAPI.Data;
+using ContactWebAPI.Interfaces;
 
 namespace ContactWebAPI
 {
@@ -40,9 +41,7 @@ namespace ContactWebAPI
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 			});
 			services.AddScoped<Repository>();
-			services.AddIdentity<User, IdentityRole>()
-				.AddEntityFrameworkStores<ContactDBContext>()
-				.AddDefaultTokenProviders();
+			services.AddScoped<IUserRepository, UserRepository>();
 
 			services.AddAuthentication(options =>
 			{
@@ -51,22 +50,38 @@ namespace ContactWebAPI
 			})
 				.AddJwtBearer(options =>
 				{
+					options.SaveToken = true;
 					options.TokenValidationParameters = new TokenValidationParameters
 					{
-						ValidateIssuer = true,
-						ValidateAudience = true,
+						ValidateIssuer = false,
+
+						ValidateAudience = false,
+
 						ValidateLifetime = true,
 						ValidateIssuerSigningKey = true,
-						ValidIssuer = Configuration["JwtSettings:Issuer"],
-						ValidAudience = Configuration["JstSettings:Audience"],
-						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSettings:SecretKey"]))
+						
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSettings:SecretKey"])),
+
 					};
 				});
-			services.AddHostedService<RolesInitializerService>();
+
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("RequireAdministratorRole",
+					policy => policy.RequireRole("Administrator"));
+				options.AddPolicy("RequireUserRole",
+					policy => policy.RequireRole("User"));
+			});
+
+			services.AddSession(options =>
+			{
+				options.IdleTimeout = TimeSpan.FromMinutes(30);
+			});
 		}
 
 		public void Configure(IApplicationBuilder app)
 		{
+			app.UseHttpsRedirection();
 			app.UseSwagger();
 			app.UseSwaggerUI(options =>
 			{
@@ -74,11 +89,9 @@ namespace ContactWebAPI
 				options.RoutePrefix = "swagger";
 			});
 			app.UseRouting();
-			app.UseHttpsRedirection();
-
+			app.UseCookiePolicy();
 			app.UseAuthentication();
 			app.UseAuthorization();
-
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
+using ModelLibrary.Auth.Dto;
 
 namespace MyHomework20.Models
 {
@@ -15,7 +16,7 @@ namespace MyHomework20.Models
 			_httpClient = httpClient;
 		}
 
-		public async Task<bool> RegisterAsync(UserRegistration model)
+		public async Task<bool> RegisterAsync(RegistrationRequest model)
 		{
 			var url = "https://localhost:7062/api/user/register";
 			var r = await _httpClient.PostAsync(
@@ -33,18 +34,22 @@ namespace MyHomework20.Models
 			}
 		}
 
-		public async Task<string> LoginAsync(UserLogin model)
+		public async Task<LoginResponse> LoginAsync(LoginRequest model)
 		{
-			var url = "https://localhost:7062/api/user/loginforweb";
+			var url = "https://localhost:7062/api/user/login";
 
 			var r = await _httpClient.PostAsJsonAsync(url, model);
 
 			if(r.IsSuccessStatusCode==true)
 			{
-				var authData = await r.Content.ReadFromJsonAsync<AuthResult>();
-				return authData.Token;
+				var authResponse = await r.Content.ReadFromJsonAsync<LoginResponse>();
+				return authResponse;
 			}
-			return null;
+			return new LoginResponse
+			{
+				User = null,
+				Token = ""
+			};
 		}
 
 		public async Task<bool> LogoutAsync()
