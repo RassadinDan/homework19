@@ -2,6 +2,7 @@
 using ContactDesktop.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,14 @@ namespace ContactDesktop
 	/// </summary>
 	public partial class CreationWindow : Window
 	{
-		public List<Contact> _list;
-		public CreationWindow(List<Contact> list)
+		public ObservableCollection<Contact> _list;
+		public CreationWindow(ObservableCollection<Contact> list)
 		{
 			InitializeComponent();
 			_list = list;
 		}
 
-		public void CreateBut_OnClick(object sender, RoutedEventArgs e)
+		public async void CreateBut_OnClick(object sender, RoutedEventArgs e)
 		{
 			Contact contact = new Contact();
 			contact.Surname = SurnameTextBox.Text;
@@ -39,7 +40,7 @@ namespace ContactDesktop
 			contact.Description = DescriotionTextBox.Text;
 			_list.Add(contact);
 			var api = new ContactDataApi();
-			api.AddContact(contact);
+			await api.AddContact(contact);
 			Close();
 		}
 

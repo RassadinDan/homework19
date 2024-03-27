@@ -20,10 +20,10 @@ namespace MyHomework20.Controllers
 		/// </summary>
 		/// <returns></returns>
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
 			var data = new ContactDataApi();
-			var contacts = data.GetContacts();
+			var contacts = await data.GetContacts();
 			
 			return View(contacts);
 		}
@@ -34,28 +34,34 @@ namespace MyHomework20.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 
-		public IActionResult Details(int id)
+		public async Task<IActionResult> Details(int id)
 		{
-			if (id >= 0)
+			if (AuthSession.User != null)
 			{
-				var db = new ContactDataApi();
-				try
+				if (id >= 0)
 				{
-					var contact = db.GetContactById(id);
-					return View(contact);
+					var dataApi = new ContactDataApi();
+					try
+					{
+						var contact = await dataApi.GetContactById(id);
+						return View(contact);
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex.Message);
+						return RedirectToAction(nameof(Error));
+					}
 				}
-				catch (Exception ex)
+
+				else
 				{
-					Console.WriteLine(ex.Message);
 					return RedirectToAction(nameof(Error));
 				}
 			}
-
 			else
 			{
-				return RedirectToAction(nameof(Error));
+				return RedirectToAction("Login", "User");
 			}
-
 		}
 
 		/// <summary>
@@ -66,7 +72,14 @@ namespace MyHomework20.Controllers
 
 		public IActionResult Create()
 		{
-			return View();
+			if (AuthSession.User == null)
+			{
+				return RedirectToAction("Login", "User");
+			}
+			else
+			{
+				return View();
+			}
 		}
 
 		/// <summary>
@@ -77,7 +90,7 @@ namespace MyHomework20.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 
-		public IActionResult CreateNew(Contact _contact)
+		public async Task<IActionResult> CreateNew(Contact _contact)
 		{
 			var validator = new ContactValidator();
 			var error = validator.Validate(_contact);
@@ -87,7 +100,7 @@ namespace MyHomework20.Controllers
 			var api = new ContactDataApi();
 			try
 			{
-				api.AddContact(_contact);
+				await api.AddContact(_contact);
 			}
 			catch (Exception ex)
 			{
@@ -119,15 +132,22 @@ namespace MyHomework20.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 
-		public IActionResult Edit(int id)
+		public async Task<IActionResult> Edit(int id)
 		{
-			var api = new ContactDataApi();
-			var contact = api.GetContactById(id);
-			if(contact == null)
+			if (AuthSession.User != null && AuthSession.User.Role == "admin")
 			{
-				return NotFound();
+				var api = new ContactDataApi();
+				var contact = await api.GetContactById(id);
+				if (contact == null)
+				{
+					return NotFound();
+				}
+				return View(contact);
 			}
-			return View(contact);
+			else
+			{
+				return RedirectToAction("Login", "User");
+			}
 		}
 
 		/// <summary>
@@ -138,16 +158,23 @@ namespace MyHomework20.Controllers
 		/// <returns></returns>
 		[HttpPost("Home/EditContact/{id}")]
 
-		public IActionResult EditContact (int id, [FromForm]Contact editedContact)
+		public async Task<IActionResult> EditContact (int id, [FromForm]Contact editedContact)
 		{
-			Console.Write($"--->{editedContact.Id}, {editedContact.Surname}, {editedContact.Name}, {editedContact.Midname}," +
-				$"{editedContact.Phone}, {editedContact.Address}, {editedContact.Description}.\n");
+			if (AuthSession.User != null && AuthSession.User.Role == "admin")
+			{
+				Console.Write($"--->{editedContact.Id}, {editedContact.Surname}, {editedContact.Name}, {editedContact.Midname}," +
+					$"{editedContact.Phone}, {editedContact.Address}, {editedContact.Description}.\n");
 
-			var api = new ContactDataApi();
+				var api = new ContactDataApi();
 
-			api.Update(editedContact);
+				await api.Update(editedContact);
 
-			return RedirectToAction(nameof(Index));
+				return RedirectToAction(nameof(Index));
+			}
+			else
+			{
+				return RedirectToAction("Login", "User");
+			}
 		}
 
 		/// <summary>
@@ -156,13 +183,19 @@ namespace MyHomework20.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 
-		public IActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
+			if (AuthSession.User != null && AuthSession.User.Role == "admin")
+			{
+				var api = new ContactDataApi();
+				await api.Remove(id);
 
-			var api = new ContactDataApi();
-			api.Remove(id);
-
-			return RedirectToAction(nameof(Index));
+				return RedirectToAction(nameof(Index));
+			}
+			else
+			{
+				return RedirectToAction("Login", "User");
+			}
 		}
 	}
 }

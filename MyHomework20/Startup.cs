@@ -43,16 +43,14 @@ namespace MyHomework20
 			});
 
 
-			services.AddHttpClient<AuthService>("UnsafeSSLClient", client =>
-			{
-
-			}).ConfigurePrimaryHttpMessageHandler(() =>
-			{
-				return new HttpClientHandler
-				{
-					ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicy) => true
-				};
-			});
+			services.AddHttpClient<AuthService>();
+			//}).ConfigurePrimaryHttpMessageHandler(() =>
+			//{
+			//	return new HttpClientHandler
+			//	{
+			//		ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicy) => true
+			//	};
+			//});
 			
 			services.AddSession(options =>
 			{

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContactDesktop.Models;
 using ContactDesktop.Data;
+using System.Collections.ObjectModel;
 
 namespace ContactDesktop
 {
@@ -22,14 +23,24 @@ namespace ContactDesktop
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public List<Contact> data { get; set; }
+		public ObservableCollection<Contact> Data { get; set; }
+
 		public MainWindow()
 		{
 			InitializeComponent();
 			var api = new ContactDataApi();
-			data = api.GetContacts().ToList<Contact>();
-
-			ContactListBox.ItemsSource = data;
+			Loaded += async (sender, e) =>
+			{
+				var data = await api.GetContacts();
+				Data = new ObservableCollection<Contact>(data);
+				ContactListBox.ItemsSource = Data;
+			};
+			if(AuthSession.User == null)
+			{
+				EditBut.Visibility = Visibility.Hidden;
+				CreateBut.Visibility = Visibility.Hidden;
+				DeleteBut.Visibility = Visibility.Hidden;
+			}
 		}
 
 		private void ListBox_SelectionChanged(object sender, RoutedEventArgs e)
@@ -38,11 +49,9 @@ namespace ContactDesktop
 
 			if (contact != null)
 			{
-				//текст текстблока не выводится, он почему-то не отображается//
 				MainTextBlock.Text = $"Фамилия: {contact.Surname}\n" +
 					$"Имя: {contact.Name}\nОтчество: {contact.Midname}\nТелефон: {contact.Phone}\n" +
 					$"Адрес: {contact.Address}\nОписание: {contact.Description}";
-				//ContactListBox.Items.Refresh();
 			}
 			else
 			{ 
@@ -52,24 +61,24 @@ namespace ContactDesktop
 
 		private void CreateBut_OnClick(object sender, RoutedEventArgs e)
 		{
-			var window = new CreationWindow(data);
-			window.InitializeComponent();
+			var window = new CreationWindow(Data);
+			//window.InitializeComponent();
 			window.Show();
-
+			//window.Closed += (obj, k) => ContactListBox.UpdateLayout();
 		}
 
-		private void DeleteBut_OnClick(object sender, RoutedEventArgs e)
+		private async void DeleteBut_OnClick(object sender, RoutedEventArgs e)
 		{
 			var c = ContactListBox.SelectedItem as Contact;
-			data.Remove(c);
-			ContactListBox.Items.Refresh();
 			var api = new ContactDataApi();
-			api.Remove(c.Id-1);
+			await api.Remove(c.Id);
+			Data.Remove(c);
+			ContactListBox.UpdateLayout();
 		}
 
 		private void EditBut_OnClick(object sender, RoutedEventArgs e)
 		{
-			var window = new EditionWindow(ContactListBox.SelectedItem as Contact);
+			var window = new EditionWindow(Data ,ContactListBox.SelectedItem as Contact);
 			window.Show();
 		}
 
@@ -77,6 +86,24 @@ namespace ContactDesktop
 		{
 			var authWindow = new AuthWindow();
 			authWindow.Show();
+			authWindow.Closed += (obj, k) =>
+			{
+				if(AuthSession.User != null)
+				{
+					CreateBut.Visibility = Visibility.Visible;
+					if(AuthSession.User.Role == "admin")
+					{
+						EditBut.Visibility = Visibility.Visible;
+						DeleteBut.Visibility = Visibility.Visible;
+					}
+				}
+				else
+				{
+					CreateBut.Visibility = Visibility.Hidden;
+					EditBut.Visibility = Visibility.Hidden;
+					DeleteBut.Visibility = Visibility.Hidden;
+				}
+			};
 		}
 	}
 }

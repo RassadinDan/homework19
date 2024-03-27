@@ -44,7 +44,7 @@ namespace ContactWebAPI.Controllers
 		}
 
 		[HttpPut("updatecontact/{id}")]
-		[Authorize(Policy = "RequireAdministratorRole")]
+		[Authorize]
 		public async Task<IActionResult> Put(int id, [FromBody] Contact contact) 
 		{
 			if (id != contact.Id)
@@ -72,8 +72,8 @@ namespace ContactWebAPI.Controllers
 		}
 
 		[HttpDelete("removecontact/{id}")]
-		[Authorize(Policy = "RequireAdministratorRole")]
-		public async Task<IActionResult> Delete(int id) 
+		[Authorize]
+		public async Task<IActionResult> Delete(int id)
 		{
 			var contact = await _repository.GetByIdAsync(id);
 			if (contact == null)

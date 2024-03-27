@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ContactWebAPI.Models;
+using ModelLibrary.Auth;
 
 namespace ContactWebAPI.DataContext
 {

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Text;
 using ModelLibrary.Auth.Dto;
+using System.Net.Http.Headers;
 
 namespace MyHomework20.Models
 {
@@ -11,19 +12,14 @@ namespace MyHomework20.Models
 
 		public AuthService(HttpClient httpClient)
 		{
-			var handler = new HttpClientHandler();
-			handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
 			_httpClient = httpClient;
 		}
 
 		public async Task<bool> RegisterAsync(RegistrationRequest model)
 		{
 			var url = "https://localhost:7062/api/user/register";
-			var r = await _httpClient.PostAsync(
-				requestUri: url,
-				content: new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
-				mediaType: "application/json"));
-			Console.WriteLine(r);
+			var r = await _httpClient.PostAsJsonAsync(url, model);
+			Console.WriteLine(r.StatusCode);
 			if(r.IsSuccessStatusCode)
 			{
 				return true;
@@ -43,6 +39,7 @@ namespace MyHomework20.Models
 			if(r.IsSuccessStatusCode==true)
 			{
 				var authResponse = await r.Content.ReadFromJsonAsync<LoginResponse>();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authResponse.Token);
 				return authResponse;
 			}
 			return new LoginResponse

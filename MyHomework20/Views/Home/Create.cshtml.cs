@@ -6,7 +6,6 @@ namespace MyHomework20.Views.Home
 {
     public class CreateModel : PageModel
     {
-        //public Contact Contact { get; set; }
         public void OnGet()
         {
         }

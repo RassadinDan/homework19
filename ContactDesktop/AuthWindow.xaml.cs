@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContactDesktop.Auth.Dto;
 
 namespace ContactDesktop
 {
@@ -23,19 +24,24 @@ namespace ContactDesktop
 		public AuthWindow()
 		{
 			InitializeComponent();
-			if(Session.UserName == string.Empty)
+			if(AuthSession.User == null)
 			{
 				UsernameBlock.Text = string.Empty;
+				LogoutBut.Visibility = Visibility.Hidden;
+				LogInBut.Visibility = Visibility.Visible;
 			}
 			else
 			{
-				UsernameBlock.Text = Session.UserName;
+				UsernameBlock.Text = AuthSession.User.UserName;
+				UserRoleBlock.Text = AuthSession.User.Role;
+				LogInBut.Visibility = Visibility.Hidden;
+				LogoutBut.Visibility = Visibility.Visible;
 			}
 		}
 
 		private void RegisterBut_OnClick(object sender, RoutedEventArgs e)
 		{
-			var form = new UserRegistration();
+			var form = new RegistrationRequest();
 			var registerWindow = new RegisterWindow(form);
 			registerWindow.Show();
 		}
@@ -47,10 +53,22 @@ namespace ContactDesktop
 			{
 				Dispatcher.Invoke(() =>
 				{
-					UsernameBlock.Text = Session.UserName;
+					UsernameBlock.Text = AuthSession.User.UserName;
+					UserRoleBlock.Text = AuthSession.User.Role;
+					LogInBut.Visibility = Visibility.Hidden;
+					LogoutBut.Visibility = Visibility.Visible;
 				});
 			};
 			loginWindow.Show();
+		}
+
+		private void LogoutBut_OnClick(object sender, RoutedEventArgs e)
+		{
+			AuthSession.ClearSession();
+			UsernameBlock.Text = string.Empty;
+			UserRoleBlock.Text = string.Empty;
+			LogoutBut.Visibility = Visibility.Hidden;
+			LogInBut.Visibility = Visibility.Visible;
 		}
 	}
 }

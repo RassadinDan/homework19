@@ -71,7 +71,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\Session.cs" />
+    <Compile Include="Auth\Dto\LoginRequest.cs" />
+    <Compile Include="Auth\Dto\LoginResponse.cs" />
+    <Compile Include="Auth\Dto\RegistrationRequest.cs" />
+    <Compile Include="Auth\User.cs" />
+    <Compile Include="Models\AuthSession.cs" />
     <Compile Include="RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
@@ -125,9 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Contact.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserLogin.cs" />
-    <Compile Include="Models\UserRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

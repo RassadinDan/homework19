@@ -23,6 +23,19 @@
                  Grid.Column="0"
                  Margin="5,5,5,5" Grid.RowSpan="2"
                  ListBox.SelectionChanged="ListBox_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1} {2}">
+                                <Binding Path="Surname"/>
+                                <Binding Path="Name"/>
+                                <Binding Path="Midname"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
 
         <Button x:Name="CreateBut"

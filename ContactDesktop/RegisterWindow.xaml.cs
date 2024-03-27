@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContactDesktop.Auth.Dto;
 
 namespace ContactDesktop
 {
@@ -21,15 +22,14 @@ namespace ContactDesktop
 	/// </summary>
 	public partial class RegisterWindow : Window
 	{
-		public UserRegistration _form;
-		public RegisterWindow(UserRegistration form)
+		public RegistrationRequest _form;
+		public RegisterWindow(RegistrationRequest form)
 		{
 			InitializeComponent();
 			_form = form;
 		}
 
-
-		private void RegisterBut_OnClick(object sender, RoutedEventArgs e)
+		private async void RegisterBut_OnClick(object sender, RoutedEventArgs e)
 		{
 			var userData = new UserDataApi();
 			if (LoginBox.Text != string.Empty && PasswdBox.Password != string.Empty && PasswdConfirmationBox.Password != string.Empty &&
@@ -38,7 +38,7 @@ namespace ContactDesktop
 				_form.UserName = LoginBox.Text;
 				_form.Password = PasswdBox.Password;
 				_form.ConfirmPassword = PasswdConfirmationBox.Password;
-				userData.Register(_form);
+				await userData.Register(_form);
 				Close();
 			}
 			else

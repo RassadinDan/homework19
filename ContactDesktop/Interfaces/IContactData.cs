@@ -1,11 +1,12 @@
 ﻿using ContactDesktop.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ContactDesktop.Interfaces
 {
 	public interface IContactData
 	{
-		IEnumerable<Contact> GetContacts();
-		void AddContact(Contact contact);
+		Task<IEnumerable<Contact>> GetContacts();
+		Task AddContact(Contact contact);
 	}
 }

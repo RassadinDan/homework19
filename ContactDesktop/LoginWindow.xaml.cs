@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContactDesktop.Auth.Dto;
 
 namespace ContactDesktop
 {
@@ -29,7 +30,7 @@ namespace ContactDesktop
 
 		public async void LogInBut_OnClick(object sender, RoutedEventArgs e)
 		{
-			var form = new UserLogin();
+			var form = new LoginRequest();
 			form.UserName = LoginBox.Text;
 			form.Password= PasswdBox.Password;
 			var userData = new UserDataApi();

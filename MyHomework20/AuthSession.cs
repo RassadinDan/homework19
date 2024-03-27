@@ -9,7 +9,7 @@ namespace MyHomework20
 
 		public static User? User { get; set; }
 
-		public static IList<string>? Roles { get; set; }
+		//public static IList<string>? Roles { get; set; }
 
 		public static string? Token {  get; set; }
 
@@ -17,7 +17,7 @@ namespace MyHomework20
 		{ 
 			User = null;
 			IsAuthenticated = false;
-			Roles = null;
+			//Roles = null;
 			Token = string.Empty;
 		}
 	}

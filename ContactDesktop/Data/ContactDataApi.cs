@@ -5,6 +5,8 @@ using System.Text;
 using ContactDesktop.Interfaces;
 using ContactDesktop.Models;
 using System;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace ContactDesktop.Data
 {
@@ -14,54 +16,56 @@ namespace ContactDesktop.Data
 
 		public ContactDataApi()
 		{
-			var handler = new HttpClientHandler();
-			handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
-			_httpClient = new HttpClient(handler);
+			_httpClient = new HttpClient();
+			if(AuthSession.IsAuthenticated == true)
+			{
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AuthSession.Token);
+			}
 		}
 
-		public void AddContact(Contact contact)
+		public async Task AddContact(Contact contact)
 		{
-			string url = @"https://localhost:7062/api/data";
+			string url = @"https://localhost:7062/api/data/addcontact";
 
-			var r = _httpClient.PostAsync(
+			var r = await _httpClient.PostAsync(
 				requestUri: url,
 				content: new StringContent(JsonConvert.SerializeObject(contact), Encoding.UTF8,
-				mediaType: "application/json")).Result;
-			Console.Write(r);
+				mediaType: "application/json"));
+			Console.Write($"{r.StatusCode}===> {r.IsSuccessStatusCode}\n");
 		}
 
-		public IEnumerable<Contact> GetContacts() 
+		public async Task<IEnumerable<Contact>> GetContacts()
 		{
-			string url = @"https://localhost:7062/api/data";
+			string url = @"https://localhost:7062/api/data/getcontacts";
 
-			string json = _httpClient.GetStringAsync(url).Result;
+			var json = await _httpClient.GetStringAsync(url);
 			return JsonConvert.DeserializeObject<IEnumerable<Contact>>(json);
 		}
 		
-		public Contact GetContactById(int id) 
+		public async Task<Contact> GetContactById(int id) 
 		{
-			string url = $@"https://localhost:7062/api/data/{id}";
+			string url = $@"https://localhost:7062/api/data/getone/{id}";
 
-			string json = _httpClient.GetStringAsync(url).Result;
+			string json = await _httpClient.GetStringAsync(url);
 			return JsonConvert.DeserializeObject<Contact>(json);
 		}
 
-		public void Update(Contact contact)
+		public async Task Update(Contact contact)
 		{
 			int id = contact.Id;
-			string url = $@"https://localhost:7062/api/data/{id}";
+			string url = $@"https://localhost:7062/api/data/updatecontact/{id}";
 
-			var r = _httpClient.PutAsync(url, new StringContent(JsonConvert.SerializeObject(contact), Encoding.UTF8,
-				mediaType: "application/json")).Result;
-			Console.Write(r);
+			var r = await _httpClient.PutAsync(url, new StringContent(JsonConvert.SerializeObject(contact), Encoding.UTF8,
+				mediaType: "application/json"));
+			Console.Write($"{r.StatusCode}===> {r.IsSuccessStatusCode}\n");
 		}
 
-		public void Remove(int id)
+		public async Task Remove(int id)
 		{
-			string url = $@"https://localhost:7062/api/data/{id}";
+			string url = $@"https://localhost:7062/api/data/removecontact/{id}";
 
-			var r = _httpClient.DeleteAsync(url).Result;
-			Console.Write(r);
+			var r = await _httpClient.DeleteAsync(url);
+			Console.Write($"{r.StatusCode}===> {r.IsSuccessStatusCode}\n");
 		}
 	}
 }

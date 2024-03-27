@@ -1609,6 +1609,16 @@
             "rid": "win"
           }
         }
+      },
+      "ModelLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/ModelLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ModelLibrary.dll": {}
+        }
       }
     }
   },
@@ -4329,6 +4339,11 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "ModelLibrary/1.0.0": {
+      "type": "project",
+      "path": "../ModelLibrary/ModelLibrary.csproj",
+      "msbuildProject": "../ModelLibrary/ModelLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4338,6 +4353,7 @@
       "Microsoft.EntityFrameworkCore >= 8.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.0",
+      "ModelLibrary >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
@@ -4372,7 +4388,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Work\\Homework\\Homework19\\ModelLibrary\\ModelLibrary.csproj": {
+              "projectPath": "D:\\Work\\Homework\\Homework19\\ModelLibrary\\ModelLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

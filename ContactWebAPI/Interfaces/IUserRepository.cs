@@ -1,5 +1,5 @@
-﻿using ContactWebAPI.Models;
-using ContactWebAPI.Models.Dto;
+﻿using ModelLibrary.Auth.Dto;
+using ModelLibrary.Auth;
 
 namespace ContactWebAPI.Interfaces
 {

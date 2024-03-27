@@ -2,6 +2,7 @@
 using ContactDesktop.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +23,11 @@ namespace ContactDesktop
 	public partial class EditionWindow : Window
 	{
 		public Contact _contact;
-
-		public EditionWindow(Contact contact)
+		public ObservableCollection<Contact> _contacts;
+		public EditionWindow(ObservableCollection<Contact> contacts, Contact contact)
 		{
 			_contact = contact;
-
+			_contacts = contacts;
 			InitializeComponent();
 			SurnameTextBox.Text = contact.Surname;
 			NameTextBox.Text = contact.Name;
@@ -36,7 +37,7 @@ namespace ContactDesktop
 			DescriotionTextBox.Text = contact.Description;
 		}
 
-		public void EditBut_OnClick(object sender, RoutedEventArgs e)
+		public async void EditBut_OnClick(object sender, RoutedEventArgs e)
 		{
 			_contact.Surname = SurnameTextBox.Text;
 			_contact.Name = NameTextBox.Text;
@@ -45,7 +46,10 @@ namespace ContactDesktop
 			_contact.Address = AddressTextBox.Text;
 			_contact.Description = DescriotionTextBox.Text;
 			var api = new ContactDataApi();
-			api.Update(_contact);
+			await api.Update(_contact);
+			var index = _contacts.IndexOf(_contact);
+			_contacts.RemoveAt(index);
+			_contacts.Insert(index, _contact);
 			Close();
 		}
 

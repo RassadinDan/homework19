@@ -29,6 +29,7 @@
 			@Html.LabelFor(model => model.ConfirmPassword)
 			@Html.TextBoxFor(model => model.ConfirmPassword, new{@class = "form-control"})
 		</div>
+		@Html.Hidden("Role", "user")
 		<button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 	}
 	</body>

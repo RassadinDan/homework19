@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContactDesktop.Models;
 using Newtonsoft.Json;
+using ContactDesktop.Auth.Dto;
 
 namespace ContactDesktop.Data
 {
@@ -15,37 +16,36 @@ namespace ContactDesktop.Data
 
 		public UserDataApi()
 		{
-			var handler = new HttpClientHandler();
-			handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
-			_httpClient = new HttpClient(handler);
+			_httpClient = new HttpClient();
 		}
 
-		public void Register(UserRegistration model)
+		public async Task Register(RegistrationRequest model)
 		{
 			var url = "https://localhost:7062/api/user/register";
-			var r =_httpClient.PostAsync(
+			var r = await _httpClient.PostAsync(
 				requestUri: url,
 				content: new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
-				mediaType: "application/json")).Result;
-			Console.WriteLine(r);
+				mediaType: "application/json"));
+			
 		}
 
-		public async Task<bool> Login(UserLogin model)
+		public async Task<bool> Login(LoginRequest model)
 		{
 			var url = "https://localhost:7062/api/user/login";
 
 			try { 
 
-				var r = _httpClient.PostAsync(
+				var r = await _httpClient.PostAsync(
 					requestUri: url,
 					content: new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
-					mediaType: "application/json")).Result;
+					mediaType: "application/json"));
 				var responseContent = await r.Content.ReadAsStringAsync();
 				var loginResponse = JsonConvert.DeserializeObject<LoginResponse>(responseContent);
 
-				Session.UserName = model.UserName;
-				Session.AuthToken = loginResponse.Token;
-				Console.WriteLine($"{Session.UserName}, {Session.AuthToken}");
+				AuthSession.User = loginResponse.User;
+				AuthSession.Token = loginResponse.Token;
+				AuthSession.IsAuthenticated = true;
+				Console.WriteLine($"{AuthSession.User.UserName}, {AuthSession.Token}");
 				return true; 
 			}
 			catch(HttpRequestException ex)
@@ -62,7 +62,7 @@ namespace ContactDesktop.Data
 
 			if(r.IsSuccessStatusCode)
 			{
-				Session.ClearSession();
+				AuthSession.ClearSession();
 				return true;
 			}
 			else
@@ -71,10 +71,5 @@ namespace ContactDesktop.Data
 				return false;
 			}
 		}
-	}
-
-	public class LoginResponse
-	{
-		public string Token { get; set; }
 	}
 }

@@ -4,7 +4,7 @@ namespace MyHomework20.Interfaces
 {
 	public interface IContactData
 	{
-		IEnumerable<Contact> GetContacts();
-		void AddContact(Contact contact);
+		Task<IEnumerable<Contact>> GetContacts();
+		Task AddContact(Contact contact);
 	}
 }

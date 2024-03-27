@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Diagnostics.Eventing.Reader;
 using ContactWebAPI.Interfaces;
-using ContactWebAPI.Models.Dto;
+using ModelLibrary.Auth.Dto;
 using System.Reflection.Metadata.Ecma335;
 
 namespace ContactWebAPI.Controllers
@@ -83,7 +83,6 @@ namespace ContactWebAPI.Controllers
 			if (ModelState.IsValid) 
 			{
 				var user = await _userRepository.Register(model);
-
 				if(user != null)
 				{
 					return Ok(new { message = "Register succeeded" });

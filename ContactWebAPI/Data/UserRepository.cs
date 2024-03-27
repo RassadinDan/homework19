@@ -1,7 +1,8 @@
 ﻿using ContactWebAPI.DataContext;
 using ContactWebAPI.Interfaces;
 using ContactWebAPI.Models;
-using ContactWebAPI.Models.Dto;
+using ModelLibrary.Auth.Dto;
+using ModelLibrary.Auth;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

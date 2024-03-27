@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ContactWebAPI.Models
 {
     [Table("Contacts")]
-    //[Bind("Surname", "Name", "Midname", "Phone", "Address", "Description")]
     public class Contact
     {
         [Key]
@@ -30,15 +29,9 @@ namespace ContactWebAPI.Models
         [FromForm]
         public string Description { get; set; }
 
-        public Contact(/*int id, string surname, string name, string midname, int phone, string address, string description*/)
+        public Contact()
         {
-            //Id = id;
-            //Surname = surname;
-            //Name = name;
-            //Midname = midname;
-            //Phone = phone;
-            //Address = address;
-            //Description = description;
+
         }
 
     }
