@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\
+D:\Work\Homework\Homework19\ContactDesktop\obj\Debug\net8.0-windows\
 ContactDesktop
 none
 false
-DEBUG;TRACE
+TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Work\Homework\Homework19\ContactDesktop\App.xaml
-6-199293820
+6-765344353
 
-19-704531406
-191203459959
+19-1221407938
+203763336210
 AuthWindow.xaml;CreationWindow.xaml;EditionWindow.xaml;LoginWindow.xaml;MainWindow.xaml;RegisterWindow.xaml;
 
-False
+True
 

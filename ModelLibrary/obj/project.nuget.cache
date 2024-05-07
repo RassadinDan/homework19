@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "7B1FEoHXmYn3LaaQg5wDSxupHLwmTJtGtoPZNI4GqQ8F+2CPkpX34DhZuXaLVBsHEQEZbDVgXECMKi1ekoUaMA==",
+  "dgSpecHash": "H99quvU9/R4IZIvNS6p7nVe6xbnPyD9E5ZlN/zjo73eAVb2eLsLeNLcyV42pSFm2wFKlYp0h0gybyEfFRM+K2A==",
   "success": true,
   "projectFilePath": "D:\\Work\\Homework\\Homework19\\ModelLibrary\\ModelLibrary.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Данька\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\Данька\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\Данька\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -42,40 +42,6 @@ namespace ContactWebAPI.Controllers
 			return BadRequest(new { message = "что-то не так." });
 		}
 
-		//[HttpPost("loginforweb")]
-		//public async Task<IActionResult> LoginForWeb([FromBody] UserLogin model)
-		//{
-		//	var user = await _userManager.FindByNameAsync(model.UserName);
-		//	if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
-		//	{
-		//		var roles = await _userManager.GetRolesAsync(user);
-
-		//		var claims = new List<Claim>
-		//		{
-		//			new Claim(ClaimTypes.Name, user.UserName),
-		//		};
-
-		//		foreach (var userRole in roles)
-		//		{
-		//			claims.Add(new Claim(ClaimTypes.Role, userRole));
-		//			_logger.Log(LogLevel.Information, userRole);
-		//		}
-
-		//		var tokenHandler = new JwtSecurityTokenHandler();
-		//		var key = Encoding.UTF8.GetBytes(_config["JwtSettings:SecretKey"]);
-		//		var tokenDescriptor = new SecurityTokenDescriptor
-		//		{
-		//			Subject = new ClaimsIdentity(claims),
-		//			Expires = DateTime.UtcNow.AddDays(7),
-		//			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-		//		};
-		//		var token = tokenHandler.CreateToken(tokenDescriptor);
-		//		return Ok(new { Token = tokenHandler.WriteToken(token) });
-		//	}
-
-		//	return Unauthorized();
-		//}
-
 
 		[HttpPost("register")]
 		public async Task<IActionResult> Register([FromBody]RegistrationRequest model)

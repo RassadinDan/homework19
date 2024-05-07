@@ -10,3 +10,4 @@ D:\Work\Homework\Homework19\ModelLibrary\obj\Debug\net8.0\ModelLibrary.dll
 D:\Work\Homework\Homework19\ModelLibrary\obj\Debug\net8.0\refint\ModelLibrary.dll
 D:\Work\Homework\Homework19\ModelLibrary\obj\Debug\net8.0\ModelLibrary.pdb
 D:\Work\Homework\Homework19\ModelLibrary\obj\Debug\net8.0\ref\ModelLibrary.dll
+D:\Work\Homework\Homework19\ModelLibrary\obj\Debug\net8.0\ModelLibrary.csproj.AssemblyReference.cache

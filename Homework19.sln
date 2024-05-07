@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyHomework20", "MyHomework2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactWebAPI", "ContactWebAPI\ContactWebAPI.csproj", "{C6C2BF6C-A1CB-4633-AE9E-14A7EFD7DAD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactDesktop", "ContactDesktop\ContactDesktop.csproj", "{E3D25D22-E140-4AEC-B337-36AD07F635FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactDesktop", "ContactDesktop\ContactDesktop.csproj", "{E3D25D22-E140-4AEC-B337-36AD07F635FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLibrary", "ModelLibrary\ModelLibrary.csproj", "{567C8C40-6DDB-431D-93A2-083FA98FDD68}"
 EndProject
